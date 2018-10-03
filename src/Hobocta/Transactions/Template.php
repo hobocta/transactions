@@ -21,6 +21,10 @@ class Template
         /** @noinspection PhpUnusedLocalVariableInspection */
         $data = $this->data;
         /** @noinspection PhpIncludeInspection */
+        require sprintf('%s/templates/parts/header.php', Environment::getRootDir(), $this->templateName);
+        /** @noinspection PhpIncludeInspection */
         require sprintf('%s/templates/%s.php', Environment::getRootDir(), $this->templateName);
+        /** @noinspection PhpIncludeInspection */
+        require sprintf('%s/templates/parts/footer.php', Environment::getRootDir(), $this->templateName);
     }
 }

@@ -10,7 +10,7 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
     </p>
 <?php endif; ?>
 
-<div style="background: #f0f0f0; padding: 1em; margin: 0 0 1em; display: block;">
+<div class="block">
     <?php
     if (!empty($data['errors']) && is_array($data['errors'])) {
         foreach ($data['errors'] as $error) {
@@ -61,7 +61,7 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
     </form>
 
     <?php if (!empty($data['needConfirm'])): ?>
-        <form method="post">
+        <form method="post" style="margin-top: 1em">
             <input type="submit" value="Отменить">
         </form>
     <?php endif; ?>
