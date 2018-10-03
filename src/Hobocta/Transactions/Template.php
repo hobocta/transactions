@@ -21,6 +21,6 @@ class Template
         /** @noinspection PhpUnusedLocalVariableInspection */
         $data = $this->data;
         /** @noinspection PhpIncludeInspection */
-        require sprintf('%s/../../../templates/%s.php', __DIR__, $this->templateName);
+        require sprintf('%s/templates/%s.php', Environment::getRootDir(), $this->templateName);
     }
 }
