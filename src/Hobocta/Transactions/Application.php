@@ -61,7 +61,7 @@ class Application
             if (empty($_POST['command'])) {
                 (new Controller\PersonalGet($this, $_GET, $_POST))->action();
             } elseif ($_POST['command'] === 'withdraw') {
-                (new Controller\PersonalWithdrawPost($this, $_GET, $_POST))->action();
+                (new Controller\PersonalPost($this, $_GET, $_POST))->action();
             } elseif ($_POST['command'] === 'logout') {
                 (new Controller\LogoutPost($this, $_GET, $_POST))->action();
             } else {

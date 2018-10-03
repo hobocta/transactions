@@ -6,7 +6,7 @@ use Hobocta\Transactions\CommonException;
 use Hobocta\Transactions\Sum;
 use Hobocta\Transactions\Template;
 
-class PersonalWithdrawPost extends AbstractController
+class PersonalPost extends AbstractController
 {
     private $data;
     private $userData;
