@@ -32,6 +32,7 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
     <form method="post">
         <input type="hidden" name="formToken" value="<?= base64_encode(openssl_random_pseudo_bytes(30)) ?>">
         <input type="hidden" name="command" value="withdraw">
+        <input type="hidden" name="balance" value="<?= $data['balance']['balance'] ?>">
         <?php if (!empty($data['needConfirm'])): ?>
             <input type="hidden" name="confirm" value="true">
         <?php endif; ?>

@@ -44,6 +44,16 @@ class PersonalWithdrawPost extends AbstractController
         }
 
         if (empty($data['errors']) && isset($withdraw)) {
+            if (!empty($this->postData['confirm']) && $this->postData['balance'] !== $data['balance']['balance']) {
+                unset($this->postData['confirm']);
+                $data['errors'][] = '
+                    С момента последнего рассчёта предполагаемого нового баланса изменился исходный баланс,
+                    поэтому введите сумму для вывода стредств еще раз
+                ';
+            }
+        }
+
+        if (empty($data['errors']) && isset($withdraw)) {
             $data['withdraw'] = $withdraw;
             $data['balanceNew'] = $data['balance']['balance'] - $data['withdraw'];
             $data['balanceNewFormatted'] = Sum::format($data['balanceNew']);
