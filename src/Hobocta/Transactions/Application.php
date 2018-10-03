@@ -2,7 +2,10 @@
 
 namespace Hobocta\Transactions;
 
+use Hobocta\Transactions\Authorization;
 use Hobocta\Transactions\Controller;
+use Hobocta\Transactions\Database\Database;
+use Hobocta\Transactions\Database\Table;
 
 class Application
 {
@@ -12,28 +15,27 @@ class Application
     public $users;
 
     /**
-     * @var Authorization
+     * @var Authorization\Authorization
      */
     public $authorization;
 
     /**
      * Application constructor.
-     * @throws \Exception
      */
     public function __construct()
     {
-        $this->session = new Session();
-        $this->cookie = new Cookie();
+        $this->session = new Authorization\Session();
+        $this->cookie = new Authorization\Cookie();
         $this->database = new Database();
-        $this->users = new Users($this->database);
+        $this->users = new Table\Users($this->database);
     }
 
     /**
-     * @throws \Exception
+     * @throws CommonException
      */
     public function run()
     {
-        $this->authorization = new Authorization($this);
+        $this->authorization = new Authorization\Authorization($this);
 
         if (!$this->authorization->isAuthorized()) {
             if (empty($_POST['command'])) {
@@ -41,7 +43,7 @@ class Application
             } elseif ($_POST['command'] === 'login') {
                 (new Controller\LoginPost($this, $_GET, $_POST))->action();
             } else {
-                throw new \Exception('Unknown command');
+                throw new CommonException('Unknown command');
             }
         } else {
             if (empty($_POST['command'])) {
@@ -49,7 +51,7 @@ class Application
             } elseif ($_POST['command'] === 'withdraw') {
                 // @todo
             } else {
-                throw new \Exception('Unknown command');
+                throw new CommonException('Unknown command');
             }
         }
     }

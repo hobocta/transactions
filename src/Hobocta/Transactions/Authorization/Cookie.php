@@ -1,6 +1,6 @@
 <?php
 
-namespace Hobocta\Transactions;
+namespace Hobocta\Transactions\Authorization;
 
 class Cookie
 {

@@ -1,6 +1,7 @@
 <?php
 
 use Hobocta\Transactions\Application;
+use Hobocta\Transactions\CommonException;
 use Hobocta\Transactions\ExceptionLogger;
 
 if (!defined('STDIN')) {
@@ -17,7 +18,7 @@ try {
         VALUES ("admin", "' . password_hash('admin', PASSWORD_DEFAULT) . '");
     ');
     echo 'Done' . PHP_EOL;
-} catch (\Exception $e) {
+} catch (CommonException $e) {
     ExceptionLogger::log($e);
     die(sprintf('Exception message: %s (%s:%s)', $e->getMessage(), $e->getFile(), $e->getLine()));
 }

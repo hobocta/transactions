@@ -1,6 +1,8 @@
 <?php
 
-namespace Hobocta\Transactions;
+namespace Hobocta\Transactions\Authorization;
+
+use Hobocta\Transactions\CommonException;
 
 class Session
 {
@@ -9,7 +11,7 @@ class Session
 
     /**
      * @param $id
-     * @throws \Exception
+     * @throws CommonException
      */
     public function setUserId($id)
     {
@@ -20,7 +22,7 @@ class Session
 
     /**
      * @return int|null
-     * @throws \Exception
+     * @throws CommonException
      */
     public function getUserId()
     {
@@ -33,7 +35,7 @@ class Session
 
     /**
      * @param $hash
-     * @throws \Exception
+     * @throws CommonException
      */
     public function setUserAuthHash($hash)
     {
@@ -44,7 +46,7 @@ class Session
 
     /**
      * @return null|string
-     * @throws \Exception
+     * @throws CommonException
      */
     public function getUserAuthHash()
     {
@@ -56,12 +58,12 @@ class Session
     }
 
     /**
-     * @throws \Exception
+     * @throws CommonException
      */
     private function start()
     {
         if (!session_start()) {
-            throw new \Exception('Unable to start session');
+            throw new CommonException('Unable to start session');
         }
     }
 

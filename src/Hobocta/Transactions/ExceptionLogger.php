@@ -3,12 +3,13 @@
 namespace Hobocta\Transactions;
 
 use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
 
 class ExceptionLogger
 {
-    public static function log(\Exception $e)
+    public static function log(CommonException $e)
     {
-        $logger = new \Monolog\Logger('main');
+        $logger = new Logger('main');
 
         $logger->setHandlers(
             array(

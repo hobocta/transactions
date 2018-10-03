@@ -1,6 +1,9 @@
 <?php
 
-namespace Hobocta\Transactions;
+namespace Hobocta\Transactions\Authorization;
+
+use Hobocta\Transactions\Application;
+use Hobocta\Transactions\CommonException;
 
 class Authorization
 {
@@ -13,7 +16,7 @@ class Authorization
 
     /**
      * @return bool
-     * @throws \Exception
+     * @throws CommonException
      */
     public function isAuthorized()
     {
@@ -47,14 +50,14 @@ class Authorization
 
     /**
      * @param $userId
-     * @throws \Exception
+     * @throws CommonException
      */
     public function createHash($userId)
     {
         $userId = (int)$userId;
 
         if (empty($userId)) {
-            throw new \Exception('Empty userId');
+            throw new CommonException('Empty userId');
         }
 
         $hash = Hash::generate();

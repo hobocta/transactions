@@ -1,6 +1,9 @@
 <?php
 
-namespace Hobocta\Transactions;
+namespace Hobocta\Transactions\Database\Table;
+
+use Hobocta\Transactions\CommonException;
+use Hobocta\Transactions\Database\Database;
 
 class Users
 {
@@ -14,14 +17,14 @@ class Users
     /**
      * @param $id
      * @return mixed
-     * @throws \Exception
+     * @throws CommonException
      */
     public function getById($id)
     {
         $id = (int)$id;
 
         if (empty($id)) {
-            throw new \Exception('Empty id');
+            throw new CommonException('Empty id');
         }
 
         /** @noinspection SqlResolve */
@@ -33,12 +36,12 @@ class Users
     /**
      * @param $login
      * @return mixed
-     * @throws \Exception
+     * @throws CommonException
      */
     public function getByLogin($login)
     {
         if (empty($login)) {
-            throw new \Exception('Empty login');
+            throw new CommonException('Empty login');
         }
 
         /** @noinspection SqlResolve */
@@ -50,18 +53,18 @@ class Users
     /**
      * @param $id
      * @param $authHash
-     * @throws \Exception
+     * @throws CommonException
      */
     public function updateAuthHash($id, $authHash)
     {
         $id = (int)$id;
 
         if (empty($id)) {
-            throw new \Exception('Empty login');
+            throw new CommonException('Empty login');
         }
 
         if (empty($authHash)) {
-            throw new \Exception('Empty authHash');
+            throw new CommonException('Empty authHash');
         }
 
         /** @noinspection SqlResolve */
@@ -70,7 +73,7 @@ class Users
         )->execute();
 
         if (!$result) {
-            throw new \Exception('Unable to update user auth hash');
+            throw new CommonException('Unable to update user auth hash');
         }
     }
 }

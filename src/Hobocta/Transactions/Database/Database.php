@@ -1,5 +1,7 @@
 <?php
-namespace Hobocta\Transactions;
+namespace Hobocta\Transactions\Database;
+
+use Hobocta\Transactions\CommonException;
 
 class Database
 {
@@ -15,15 +17,15 @@ class Database
 
     /**
      * @param $query
-     * @return bool|\PDOStatement
-     * @throws \Exception
+     * @return \PDOStatement
+     * @throws CommonException
      */
     public function query($query)
     {
         $result = $this->pdo->query($query);
 
         if ($result === false) {
-            throw new \Exception(serialize($this->pdo->errorInfo()));
+            throw new CommonException(serialize($this->pdo->errorInfo()));
         }
 
         return $result;

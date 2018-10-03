@@ -2,12 +2,13 @@
 
 namespace Hobocta\Transactions\Controller;
 
+use Hobocta\Transactions\CommonException;
 use Hobocta\Transactions\Template;
 
 class LoginPost extends AbstractController
 {
     /**
-     * @throws \Exception
+     * @throws CommonException
      */
     public function action()
     {
@@ -36,7 +37,7 @@ class LoginPost extends AbstractController
             header("Refresh:0");
             die();
         } else {
-            throw new \Exception('Unable to get user id');
+            throw new CommonException('Unable to get user id');
         }
     }
 }
