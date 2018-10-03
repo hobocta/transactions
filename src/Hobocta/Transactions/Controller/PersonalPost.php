@@ -93,8 +93,8 @@ class PersonalPost extends AbstractController
     private function checkBalanceFromForm()
     {
         if (empty($this->data['errors'])) {
-            if (!empty($this->postData['confirm']) && $this->postData['balance'] !== $this->data['balance']['balance']) {
-                unset($this->postData['confirm']);
+            if (!empty($this->postData['confirmed']) && $this->postData['balance'] !== $this->data['balance']['balance']) {
+                unset($this->postData['confirmed']);
                 $this->data['errors'][] = '
                     С момента последнего рассчёта предполагаемого нового баланса изменился исходный баланс,
                     поэтому введите сумму для вывода стредств еще раз
