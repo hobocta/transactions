@@ -40,7 +40,7 @@ class Balance extends AbstractTable
 
     /**
      * @param $id
-     * @return mixed
+     * @return array
      * @throws CommonException
      */
     public function getByUserId($id)

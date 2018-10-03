@@ -34,7 +34,7 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
         <input type="hidden" name="command" value="withdraw">
         <input type="hidden" name="balance" value="<?= $data['balance']['balance'] ?>">
         <?php if (!empty($data['needConfirm'])): ?>
-            <input type="hidden" name="confirm" value="true">
+            <input type="hidden" name="confirmed" value="true">
         <?php endif; ?>
         <p>
             <?php if ($data['updated']): ?>
@@ -43,12 +43,12 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
                 Сумма для вывода средств:
             <?php endif; ?>
             <input
-                name="withdraw"
+                name="sumToWithdraw"
                 <?php if (!empty($data['needConfirm'])): ?>
                     readonly
                     title="Readonly"
                 <?php endif; ?>
-                value="<?= empty($data['updated']) ? $_POST['withdraw'] : '' ?>">
+                value="<?= empty($data['updated']) ? $_POST['sumToWithdraw'] : '' ?>">
         </p>
         <?php if (!empty($data['needConfirm'])): ?>
             <p>

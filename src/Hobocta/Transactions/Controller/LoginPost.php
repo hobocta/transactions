@@ -15,18 +15,18 @@ class LoginPost extends AbstractController
         $data = [];
 
         if (empty($this->postData['login'])) {
-            $data['errors'][] = 'Field login is not filled';
+            $data['errors'][] = 'Укажите логин';
         }
 
         if (empty($this->postData['password'])) {
-            $data['errors'][] = 'Field password is not filled';
+            $data['errors'][] = 'Укажите пароль';
         }
 
         if (empty($data['errors'])) {
             $user = $this->application->users->getByLogin($this->postData['login']);
 
             if ($user === false || !password_verify($this->postData['password'], $user['password_hash'])) {
-                $data['errors'][] = 'Login or password is not correct';
+                $data['errors'][] = 'Некорректная пара логин-пароль';
             }
         }
 
