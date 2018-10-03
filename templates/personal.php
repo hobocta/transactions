@@ -5,7 +5,7 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
 ?>
 <?php if (!empty($data) && isset($data['balance']['balance'])): ?>
     <p>
-        Balance:
+        У вас на счету:
         <code><?= $data['balance']['balanceFormatted'] ?></code>
     </p>
 <?php endif; ?>
@@ -36,7 +36,7 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
             <input type="hidden" name="confirm" value="true">
         <?php endif; ?>
         <p>
-            Sum to withdraw:
+            Сумма для вывода средств:
             <input
                 name="withdraw"
                 <?php if (!empty($data['needConfirm'])): ?>
@@ -47,22 +47,22 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
         </p>
         <?php if (!empty($data['needConfirm'])): ?>
             <p>
-                New balance will be equal <code><?= $data['balanceNewFormatted'] ?></code>
+                После вывода средств у вас на счету останется <code><?= $data['balanceNewFormatted'] ?></code>
             </p>
         <?php endif; ?>
         <input
             type="submit"
-            value="<?php if (!empty($data['needConfirm'])): ?>Confirm operation<?php else: ?>Withdraw<?php endif; ?>">
+            value="<?php if (!empty($data['needConfirm'])): ?>Подтвердить вывод средств<?php else: ?>Вывести средства<?php endif; ?>">
     </form>
 
     <?php if (!empty($data['needConfirm'])): ?>
         <form method="post">
-            <input type="submit" value="Cancel">
+            <input type="submit" value="Отменить">
         </form>
     <?php endif; ?>
 </div>
 
 <form method="post">
     <input type="hidden" name="command" value="logout">
-    <input type="submit" value="Logout">
+    <input type="submit" value="Выйти">
 </form>

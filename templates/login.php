@@ -15,10 +15,10 @@ if (!empty($data['errors']) && is_array($data['errors'])) {
 <form method="post">
     <input type="hidden" name="command" value="login">
     <p>
-        Login: <input name="login" value="<?= $_POST['login'] ?>">
+        Логин: <input name="login" value="<?= $_POST['login'] ?>" placeholder="admin">
     </p>
     <p>
-        Password: <input type="password" name="password">
+        Пароль: <input type="password" name="password" placeholder="admin">
     </p>
     <p>
         <input type="submit">

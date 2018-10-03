@@ -59,7 +59,7 @@ class PersonalWithdrawPost extends AbstractController
                     $this->application->balanceManager->update($data['balance']['id'], $data['withdraw']);
                     $data['balance'] = $this->application->balance->getByUserId($userData['id']);
                     $data['updated'] = true;
-                    $data['messages'][] = 'Balance success updated';
+                    $data['messages'][] = 'Вывод средств выполнен';
                 } else {
                     header('Refresh:0');
                     die();
