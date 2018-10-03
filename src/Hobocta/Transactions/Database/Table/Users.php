@@ -3,16 +3,10 @@
 namespace Hobocta\Transactions\Database\Table;
 
 use Hobocta\Transactions\CommonException;
-use Hobocta\Transactions\Database\Database;
 
-class Users
+class Users extends AbstractTable
 {
-    private $database;
-
-    public function __construct(Database $database)
-    {
-        $this->database = $database;
-    }
+    private $tableName = 'users';
 
     /**
      * @param $id
@@ -29,7 +23,7 @@ class Users
 
         /** @noinspection SqlResolve */
         return $this->database->query(
-            "SELECT * FROM `users` WHERE `id` = {$id} LIMIT 1"
+            "SELECT * FROM `{$this->tableName}` WHERE `id` = {$id} LIMIT 1"
         )->fetch();
     }
 
@@ -46,7 +40,7 @@ class Users
 
         /** @noinspection SqlResolve */
         return $this->database->query(
-            "SELECT * FROM `users` WHERE `login` = {$this->database->pdo->quote($login)} LIMIT 1"
+            "SELECT * FROM `{$this->tableName}` WHERE `login` = {$this->database->pdo->quote($login)} LIMIT 1"
         )->fetch();
     }
 
@@ -69,8 +63,8 @@ class Users
 
         /** @noinspection SqlResolve */
         $result = $this->database->query(
-            "UPDATE `users` SET `auth_hash` = {$this->database->pdo->quote($authHash)} WHERE `id` = {$id} LIMIT 1"
-        )->execute();
+            "UPDATE `{$this->tableName}` SET `auth_hash` = {$this->database->pdo->quote($authHash)} WHERE `id` = {$id} LIMIT 1"
+        );
 
         if (!$result) {
             throw new CommonException('Unable to update user auth hash');

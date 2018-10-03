@@ -8,6 +8,7 @@ class Session
 {
     const USER_ID = 'userId';
     const USER_AUTH_HASH = 'userAuthHash';
+    const FORM_TOKEN = 'formToken';
 
     /**
      * @param $id
@@ -52,6 +53,30 @@ class Session
     {
         $this->start();
         $result = isset($_SESSION[static::USER_AUTH_HASH]) ? (string)$_SESSION[static::USER_AUTH_HASH] : null;
+        $this->close();
+
+        return $result;
+    }
+
+    /**
+     * @param token
+     * @throws CommonException
+     */
+    public function setFormToken($token)
+    {
+        $this->start();
+        $_SESSION[static::FORM_TOKEN] = $token;
+        $this->close();
+    }
+
+    /**
+     * @return null|string
+     * @throws CommonException
+     */
+    public function getFormToken()
+    {
+        $this->start();
+        $result = isset($_SESSION[static::FORM_TOKEN]) ? (string)$_SESSION[static::FORM_TOKEN] : null;
         $this->close();
 
         return $result;

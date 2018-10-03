@@ -8,6 +8,7 @@ use Hobocta\Transactions\CommonException;
 class Authorization
 {
     private $application;
+    private $userData;
 
     public function __construct(Application $application)
     {
@@ -20,11 +21,11 @@ class Authorization
      */
     public function isAuthorized()
     {
-        $userId = $this->application->session->getUserId();
-        if (!$userId) {
-            $userId = $this->application->cookie->getUserId();
+        $this->userId = $this->application->session->getUserId();
+        if (!$this->userId) {
+            $this->userId = $this->application->cookie->getUserId();
         }
-        if (!$userId) {
+        if (!$this->userId) {
             return false;
         }
 
@@ -36,12 +37,12 @@ class Authorization
             return false;
         }
 
-        $user = $this->application->users->getById($userId);
-        if (!$user) {
+        $this->userData = $this->application->users->getById($this->userId);
+        if (!$this->userData) {
             return false;
         }
 
-        if ($user['auth_hash'] !== $hash) {
+        if ($this->userData['auth_hash'] !== $hash) {
             return false;
         }
 
@@ -67,5 +68,21 @@ class Authorization
 
         $this->application->session->setUserId($userId);
         $this->application->cookie->setUserId($userId);
+    }
+
+    /**
+     * @throws CommonException
+     */
+    public function logout()
+    {
+        $this->application->session->setUserAuthHash('');
+        $this->application->cookie->setUserAuthHash('');
+        $this->application->session->setUserId(0);
+        $this->application->cookie->setUserId(0);
+    }
+
+    public function getUserData()
+    {
+        return $this->userData;
     }
 }

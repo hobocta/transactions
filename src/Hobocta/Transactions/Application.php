@@ -13,11 +13,18 @@ class Application
     public $cookie;
     public $database;
     public $users;
+    public $balance;
+    public $balanceLog;
 
     /**
      * @var Authorization\Authorization
      */
     public $authorization;
+
+    /**
+     * @var BalanceManager
+     */
+    public $balanceManager;
 
     /**
      * Application constructor.
@@ -28,6 +35,8 @@ class Application
         $this->cookie = new Authorization\Cookie();
         $this->database = new Database();
         $this->users = new Table\Users($this->database);
+        $this->balance = new Table\Balance($this->database);
+        $this->balanceLog = new Table\BalanceLog($this->database);
     }
 
     /**
@@ -36,6 +45,7 @@ class Application
     public function run()
     {
         $this->authorization = new Authorization\Authorization($this);
+        $this->balanceManager = new BalanceManager($this);
 
         if (!$this->authorization->isAuthorized()) {
             if (empty($_POST['command'])) {
@@ -47,9 +57,11 @@ class Application
             }
         } else {
             if (empty($_POST['command'])) {
-                // @todo
+                (new Controller\PersonalGet($this, $_GET, $_POST))->action();
             } elseif ($_POST['command'] === 'withdraw') {
-                // @todo
+                (new Controller\PersonalWithdrawPost($this, $_GET, $_POST))->action();
+            } elseif ($_POST['command'] === 'logout') {
+                (new Controller\LogoutPost($this, $_GET, $_POST))->action();
             } else {
                 throw new CommonException('Unknown command');
             }
