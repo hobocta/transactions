@@ -44,6 +44,7 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
             <?php endif; ?>
             <input
                 name="sumToWithdraw"
+                autofocus
                 <?php if (!empty($data['needConfirm'])): ?>
                     readonly
                     title="Readonly"
