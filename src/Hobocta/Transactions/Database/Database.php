@@ -1,4 +1,5 @@
 <?php
+
 namespace Hobocta\Transactions\Database;
 
 use Hobocta\Transactions\CommonException;
@@ -10,9 +11,18 @@ class Database
      */
     public $pdo;
 
-    public function __construct()
+    public function __construct(array $config)
     {
-        $this->pdo = new \PDO('mysql:dbname=hobocta_transactions;host=127.0.0.1;port=3306', 'root', '');
+        $this->pdo = new \PDO(
+            sprintf(
+                'mysql:dbname=%s;host=%s;port=%s',
+                $config['dbname'],
+                $config['host'],
+                $config['port']
+            ),
+            $config['username'],
+            $config['password']
+        );
     }
 
     /**

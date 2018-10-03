@@ -9,6 +9,7 @@ use Hobocta\Transactions\Database\Table;
 
 class Application
 {
+    public $config;
     public $session;
     public $cookie;
     public $database;
@@ -31,9 +32,10 @@ class Application
      */
     public function __construct()
     {
+        $this->config = Config::get();
         $this->session = new Authorization\Session();
         $this->cookie = new Authorization\Cookie();
-        $this->database = new Database();
+        $this->database = new Database($this->config['database']);
         $this->users = new Table\Users($this->database);
         $this->balance = new Table\Balance($this->database);
         $this->balanceLog = new Table\BalanceLog($this->database);

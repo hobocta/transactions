@@ -36,7 +36,11 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
             <input type="hidden" name="confirm" value="true">
         <?php endif; ?>
         <p>
-            Сумма для вывода средств:
+            <?php if ($data['updated']): ?>
+                Сумма для нового вывода средств:
+            <?php else: ?>
+                Сумма для вывода средств:
+            <?php endif; ?>
             <input
                 name="withdraw"
                 <?php if (!empty($data['needConfirm'])): ?>
