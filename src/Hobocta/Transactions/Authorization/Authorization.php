@@ -9,6 +9,7 @@ class Authorization
 {
     private $application;
     private $userData;
+    private $userId;
 
     public function __construct(Application $application)
     {
