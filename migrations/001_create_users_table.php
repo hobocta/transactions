@@ -13,12 +13,12 @@ try {
     $application = new Application();
     $application->database->query('
         CREATE TABLE IF NOT EXISTS users (
-            `user_id` int(11) NOT NULL AUTO_INCREMENT,
-            `user_login` varchar(30) NOT NULL UNIQUE,
-            `user_password` varchar(255) NOT NULL,
-            `user_hash` varchar(255),
-            PRIMARY KEY (`user_id`),
-            INDEX (`user_login`)
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `login` varchar(30) NOT NULL UNIQUE,
+            `password_hash` varchar(255) NOT NULL,
+            `auth_hash` varchar(255) UNIQUE,
+            PRIMARY KEY (`id`),
+            INDEX (`login`)
         );
     ');
     echo 'Done' . PHP_EOL;

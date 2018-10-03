@@ -13,7 +13,7 @@ try {
     $application = new Application();
     /** @noinspection SqlResolve */
     $application->database->query('
-        INSERT INTO `users` (`user_login`, `user_password`)
+        INSERT INTO `users` (`login`, `password_hash`)
         VALUES ("admin", "' . password_hash('admin', PASSWORD_DEFAULT) . '");
     ');
     echo 'Done' . PHP_EOL;

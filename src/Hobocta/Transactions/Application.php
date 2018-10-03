@@ -2,11 +2,19 @@
 
 namespace Hobocta\Transactions;
 
+use Hobocta\Transactions\Controller;
+
 class Application
 {
     public $session;
+    public $cookie;
     public $database;
     public $users;
+
+    /**
+     * @var Authorization
+     */
+    public $authorization;
 
     /**
      * Application constructor.
@@ -15,6 +23,7 @@ class Application
     public function __construct()
     {
         $this->session = new Session();
+        $this->cookie = new Cookie();
         $this->database = new Database();
         $this->users = new Users($this->database);
     }
@@ -24,31 +33,24 @@ class Application
      */
     public function run()
     {
-        if (empty($_POST['command'])) {
-            include __DIR__ . '/../../../templates/login.php';
-        } elseif ($_POST['command'] === 'login') {
-            $data = [];
+        $this->authorization = new Authorization($this);
 
-            if (empty($_POST['login'])) {
-                $data['errors'][] = 'Field login is not filled';
-            }
-
-            if (empty($_POST['password'])) {
-                $data['errors'][] = 'Field password is not filled';
-            }
-
-            $user = $this->users->getByLogin($_POST['login']);
-            if ($user === false || !password_verify($_POST['password'], $user['user_password'])) {
-                $data['errors'][] = 'Login or password is not correct';
-            }
-
-            if (!empty($data['errors'])) {
-                include __DIR__ . '/../../../templates/login.php';
+        if (!$this->authorization->isAuthorized()) {
+            if (empty($_POST['command'])) {
+                (new Controller\LoginGet($this, $_GET, $_POST))->action();
+            } elseif ($_POST['command'] === 'login') {
+                (new Controller\LoginPost($this, $_GET, $_POST))->action();
             } else {
-                // @todo создать хэш и сохранить его в базу
+                throw new \Exception('Unknown command');
             }
         } else {
-            throw new \Exception('Unknown command');
+            if (empty($_POST['command'])) {
+                // @todo
+            } elseif ($_POST['command'] === 'withdraw') {
+                // @todo
+            } else {
+                throw new \Exception('Unknown command');
+            }
         }
     }
 }
