@@ -64,15 +64,23 @@ class PersonalPost extends AbstractController
             $this->data['errors'][] = 'Укажие сумму для вывода средств';
         }
 
+        if (!Sum::isValidToUnFormat($this->postData['sumToWithdraw'])) {
+            $this->data['errors'][] = 'Некорректный формат данных';
+        }
+
         if (empty($this->postData['formToken'])) {
             $this->data['errors'][] = 'Empty formToken';
         }
     }
 
+    /**
+     * @return null
+     * @throws CommonException
+     */
     private function fillSumToWithdraw()
     {
         if (empty($this->data['errors'])) {
-            $this->data['sumToWithdraw'] = (int)$this->postData['sumToWithdraw'];
+            $this->data['sumToWithdraw'] = Sum::unFormat($this->postData['sumToWithdraw']);
 
             if ($this->data['sumToWithdraw'] <= 0) {
                 $this->data['errors'][] = 'Укажите корректную сумму для вывода средств';
