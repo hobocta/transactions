@@ -72,7 +72,7 @@ class PersonalPost extends AbstractController
     private function fillSumToWithdraw()
     {
         if (empty($this->data['errors'])) {
-            $this->data['sumToWithdraw'] = round($this->postData['sumToWithdraw'], 2);
+            $this->data['sumToWithdraw'] = (int)$this->postData['sumToWithdraw'];
 
             if ($this->data['sumToWithdraw'] <= 0) {
                 $this->data['errors'][] = 'Укажите корректную сумму для вывода средств';
@@ -105,7 +105,7 @@ class PersonalPost extends AbstractController
 
     private function calculateBalanceNew()
     {
-        $this->data['balanceNew'] = round($this->data['balance']['balance'], 2) - $this->data['sumToWithdraw'];
+        $this->data['balanceNew'] = (int)$this->data['balance']['balance'] - $this->data['sumToWithdraw'];
         $this->data['balanceNewFormatted'] = Sum::format($this->data['balanceNew']);
     }
 

@@ -16,7 +16,7 @@ try {
         CREATE TABLE IF NOT EXISTS balance (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `user_id` int(11) NOT NULL,
-            `balance` decimal(19,2) NOT NULL,
+            `balance` bigint NOT NULL,
             PRIMARY KEY (`id`),
             INDEX (`user_id`)
         );
