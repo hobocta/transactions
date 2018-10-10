@@ -17,8 +17,8 @@ try {
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `user_id` int(11) NOT NULL,
             `created_at` datetime NOT NULL,
-            `balance_old` decimal(19,2) NOT NULL,
-            `balance_new` decimal(19,2) NOT NULL,
+            `balance_old` bigint NOT NULL,
+            `balance_new` bigint NOT NULL,
             PRIMARY KEY (`id`),
             INDEX (`user_id`)
         );
