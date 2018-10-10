@@ -63,7 +63,7 @@ class PersonalPost extends AbstractController
             $this->data['errors'][] = 'Укажие сумму для вывода средств';
         }
 
-        if (!$this->sum->isValidToUnFormat($this->postData['sumToWithdraw'])) {
+        if (!$this->application->sum->isValidToUnFormat($this->postData['sumToWithdraw'])) {
             $this->data['errors'][] = 'Некорректный формат данных';
         }
 
@@ -73,13 +73,12 @@ class PersonalPost extends AbstractController
     }
 
     /**
-     * @return null
      * @throws CommonException
      */
     private function fillSumToWithdraw()
     {
         if (empty($this->data['errors'])) {
-            $this->data['sumToWithdraw'] = $this->sum->unFormat($this->postData['sumToWithdraw']);
+            $this->data['sumToWithdraw'] = $this->application->sum->unFormat($this->postData['sumToWithdraw']);
 
             if ($this->data['sumToWithdraw'] <= 0) {
                 $this->data['errors'][] = 'Укажите корректную сумму для вывода средств';
@@ -91,10 +90,8 @@ class PersonalPost extends AbstractController
                 }
             }
 
-            return $this->data['sumToWithdraw'];
+            $this->data['sumToWithdraw'];
         }
-
-        return null;
     }
 
     private function checkBalanceFromForm()
@@ -113,7 +110,7 @@ class PersonalPost extends AbstractController
     private function calculateBalanceNew()
     {
         $this->data['balanceNew'] = (int)$this->data['balance']['balance'] - $this->data['sumToWithdraw'];
-        $this->data['balanceNewFormatted'] = $this->sum->format($this->data['balanceNew']);
+        $this->data['balanceNewFormatted'] = $this->application->sum->format($this->data['balanceNew']);
     }
 
     private function isConfirmed()

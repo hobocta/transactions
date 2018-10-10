@@ -4,13 +4,11 @@ namespace Hobocta\Transactions;
 
 class Sum
 {
-    private $application;
     private $decimals;
 
-    public function __construct(Application $application)
+    public function __construct($decimals)
     {
-        $this->application = $application;
-        $this->decimals = (int)$this->application->config['decimals'];
+        $this->decimals = (int)$decimals;
     }
 
     public function format($sum)

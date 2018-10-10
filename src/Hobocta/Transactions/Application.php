@@ -13,8 +13,25 @@ class Application
     public $session;
     public $cookie;
     public $database;
+
+    /**
+     * @var Sum
+     */
+    public $sum;
+
+    /**
+     * @var Table\Users
+     */
     public $users;
+
+    /**
+     * @var Table\Balance
+     */
     public $balance;
+
+    /**
+     * @var Table\BalanceLog
+     */
     public $balanceLog;
 
     /**
@@ -36,9 +53,7 @@ class Application
         $this->session = new Authorization\Session();
         $this->cookie = new Authorization\Cookie();
         $this->database = new Database($this->config['database']);
-        $this->users = new Table\Users($this->database);
-        $this->balance = new Table\Balance($this->database);
-        $this->balanceLog = new Table\BalanceLog($this->database);
+        $this->sum = new Sum($this->config['decimals']);
     }
 
     /**
@@ -46,6 +61,9 @@ class Application
      */
     public function run()
     {
+        $this->users = new Table\Users($this, $this->database);
+        $this->balance = new Table\Balance($this, $this->database);
+        $this->balanceLog = new Table\BalanceLog($this, $this->database);
         $this->authorization = new Authorization\Authorization($this);
         $this->balanceManager = new BalanceManager($this);
 

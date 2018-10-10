@@ -32,7 +32,7 @@ class Balance extends AbstractTable
         }
 
         if (isset($data['balance'])) {
-            $data['balanceFormatted'] = Sum::format($data['balance']);
+            $data['balanceFormatted'] = $this->application->sum->format($data['balance']);
         }
 
         return $data;
@@ -61,7 +61,7 @@ class Balance extends AbstractTable
         }
 
         if (isset($data['balance'])) {
-            $data['balanceFormatted'] = Sum::format($data['balance']);
+            $data['balanceFormatted'] = $this->application->sum->format($data['balance']);
         }
 
         return $data;

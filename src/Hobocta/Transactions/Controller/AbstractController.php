@@ -3,7 +3,6 @@
 namespace Hobocta\Transactions\Controller;
 
 use Hobocta\Transactions\Application;
-use Hobocta\Transactions\Sum;
 
 class AbstractController
 {
@@ -17,6 +16,5 @@ class AbstractController
         $this->application = $application;
         $this->getData = $getData;
         $this->postData = $postData;
-        $this->sum = new Sum($this->application);
     }
 }
