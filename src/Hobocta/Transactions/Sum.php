@@ -4,19 +4,23 @@ namespace Hobocta\Transactions;
 
 class Sum
 {
-    /**
-     * Количество знаков после запятой (для вывода и для ввода сумм)
-     */
-    const DECIMALS = 5;
+    private $application;
+    private $decimals;
 
-    public static function format($sum)
+    public function __construct(Application $application)
     {
-        return number_format($sum / pow(10, static::DECIMALS), static::DECIMALS, ',', ' ');
+        $this->application = $application;
+        $this->decimals = (int)$this->application->config['decimals'];
     }
 
-    public static function isValidToUnFormat($sum)
+    public function format($sum)
     {
-        return preg_match('/^\d*[,\.]?\d{1,' . Sum::DECIMALS . '}$/', $sum);
+        return number_format(
+            $sum / pow(10, $this->decimals),
+            $this->decimals,
+            ',',
+            ' '
+        );
     }
 
     /**
@@ -24,9 +28,9 @@ class Sum
      * @return int
      * @throws CommonException
      */
-    public static function unFormat($sum)
+    public function unFormat($sum)
     {
-        if (!static::isValidToUnFormat($sum)) {
+        if (!$this->isValidToUnFormat($sum)) {
             throw new CommonException('Некорректный формат данных');
         }
 
@@ -42,13 +46,18 @@ class Sum
             $decimal = 0;
         }
 
-        $ceilSumm = $ceil * pow(10, static::DECIMALS);
+        $ceilSumm = $ceil * pow(10, $this->decimals);
 
         $decimalSumm = 0;
         for ($digit = 0; $digit < strlen($decimal); $digit++) {
-            $decimalSumm += $decimal[$digit] * pow(10, static::DECIMALS - 1 - $digit);
+            $decimalSumm += $decimal[$digit] * pow(10, $this->decimals - 1 - $digit);
         }
 
         return $ceilSumm + $decimalSumm;
+    }
+
+    public function isValidToUnFormat($sum)
+    {
+        return preg_match('/^\d*[,\.]?\d{1,' . $this->decimals . '}$/', $sum);
     }
 }
