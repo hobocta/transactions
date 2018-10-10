@@ -21,7 +21,7 @@ try {
             `balance_new` bigint NOT NULL,
             PRIMARY KEY (`id`),
             INDEX (`user_id`)
-        );
+        ) COLLATE="utf8_general_ci" ENGINE=InnoDB;
     ');
     echo 'Done' . PHP_EOL;
 } catch (CommonException $e) {

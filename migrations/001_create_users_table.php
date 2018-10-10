@@ -20,7 +20,7 @@ try {
             `auth_hash` varchar(255) UNIQUE,
             PRIMARY KEY (`id`),
             INDEX (`login`)
-        );
+        ) COLLATE="utf8_general_ci" ENGINE=InnoDB;
     ');
     echo 'Done' . PHP_EOL;
 } catch (CommonException $e) {
