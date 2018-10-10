@@ -6,6 +6,6 @@ class Sum
 {
     public static function format($sum)
     {
-        return number_format($sum, 2, ',', ' ');
+        return number_format($sum, 0, ',', ' ');
     }
 }
