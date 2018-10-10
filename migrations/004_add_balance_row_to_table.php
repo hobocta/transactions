@@ -15,7 +15,7 @@ try {
     /** @noinspection SqlResolve */
     $application->database->query('
         INSERT INTO `balance` (`user_id`, `balance`)
-        VALUES (1, 9999999.99);
+        VALUES (1, 999999999);
     ');
     echo 'Done' . PHP_EOL;
 } catch (CommonException $e) {
