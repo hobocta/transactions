@@ -4,6 +4,9 @@ namespace Hobocta\Transactions;
 
 class Sum
 {
+    /**
+     * Количество знаков после запятой (для вывода и для ввода сумм)
+     */
     const DECIMALS = 5;
 
     public static function format($sum)
