@@ -21,6 +21,13 @@ try {
             INDEX (`user_id`)
         ) COLLATE="utf8_general_ci" ENGINE=InnoDB;
     ');
+    /** @noinspection SqlResolve */
+    $application->database->query('
+        ALTER TABLE `balance`
+        ADD CONSTRAINT `FK_balance_user_id`
+        FOREIGN KEY (`user_id`)
+        REFERENCES `users` (`id`) ON UPDATE RESTRICT ON DELETE CASCADE;
+    ');
     echo 'Done' . PHP_EOL;
 } catch (CommonException $e) {
     ExceptionLogger::log($e);
