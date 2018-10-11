@@ -56,16 +56,21 @@ class Application
         $this->sum = new Sum($this->config['decimals']);
     }
 
-    /**
-     * @throws CommonException
-     */
-    public function run()
+    public function injectDependency()
     {
         $this->users = new Table\Users($this, $this->database);
         $this->balance = new Table\Balance($this, $this->database);
         $this->balanceLog = new Table\BalanceLog($this, $this->database);
         $this->authorization = new Authorization\Authorization($this);
         $this->balanceManager = new BalanceManager($this);
+    }
+
+    /**
+     * @throws CommonException
+     */
+    public function run()
+    {
+        $this->injectDependency();
 
         if (!$this->authorization->isAuthorized()) {
             if (empty($_POST['command'])) {
