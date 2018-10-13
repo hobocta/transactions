@@ -57,7 +57,7 @@ class Database
      */
     public function commit()
     {
-        $result = $this->query("Commit");
+        $result = $this->query('Commit');
         if (!$result) {
             throw new CommonException('Unable to commit changes');
         }
@@ -68,7 +68,7 @@ class Database
      */
     public function rollback()
     {
-        $result = $this->query("Rollback");
+        $result = $this->query('Rollback');
         if (!$result) {
             throw new CommonException('Unable to rollback');
         }

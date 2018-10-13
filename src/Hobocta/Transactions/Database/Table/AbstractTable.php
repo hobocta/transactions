@@ -2,17 +2,17 @@
 
 namespace Hobocta\Transactions\Database\Table;
 
-use Hobocta\Transactions\Application;
 use Hobocta\Transactions\Database\Database;
+use Hobocta\Transactions\Sum;
 
 class AbstractTable
 {
     protected $database;
-    protected $application;
+    protected $sum;
 
-    public function __construct(Application $application, Database $database)
+    public function __construct(Database $database, Sum $sum)
     {
-        $this->application = $application;
         $this->database = $database;
+        $this->sum = $sum;
     }
 }

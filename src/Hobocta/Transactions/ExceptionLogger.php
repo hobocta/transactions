@@ -7,7 +7,7 @@ use Monolog\Logger;
 
 class ExceptionLogger
 {
-    public static function log(CommonException $e)
+    public static function log(\Exception $e)
     {
         $logger = new Logger('main');
 

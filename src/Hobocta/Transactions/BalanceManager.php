@@ -2,13 +2,21 @@
 
 namespace Hobocta\Transactions;
 
+use Hobocta\Transactions\Database\Database;
+use Hobocta\Transactions\Database\Table\Balance;
+use Hobocta\Transactions\Database\Table\BalanceLog;
+
 class BalanceManager
 {
-    private $application;
+    private $database;
+    private $balance;
+    private $balanceLog;
 
-    public function __construct(Application $application)
+    public function __construct(Database $database, Balance $balance, BalanceLog $balanceLog)
     {
-        $this->application = $application;
+        $this->database = $database;
+        $this->balance = $balance;
+        $this->balanceLog = $balanceLog;
     }
 
     /**
@@ -18,9 +26,9 @@ class BalanceManager
      */
     public function update($balanceRowId, $withdraw)
     {
-        $this->application->database->startTransaction();
+        $this->database->startTransaction();
 
-        $balance = $this->application->balance->getById($balanceRowId, true);
+        $balance = $this->balance->getById($balanceRowId, true);
 
         $balanceNew = (float)$balance['balance'] - $withdraw;
 
@@ -28,10 +36,10 @@ class BalanceManager
             throw new CommonException('Incorrect sum');
         }
 
-        $this->application->balanceLog->add($balanceRowId, $balance['balance'], $balanceNew);
+        $this->balanceLog->add($balanceRowId, $balance['balance'], $balanceNew);
 
-        $this->application->balance->updateBalance($balanceRowId, $balanceNew);
+        $this->balance->updateBalance($balanceRowId, $balanceNew);
 
-        $this->application->database->commit();
+        $this->database->commit();
     }
 }

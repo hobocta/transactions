@@ -11,7 +11,7 @@ class LogoutPost extends AbstractController
      */
     public function action()
     {
-        $this->application->authorization->logout();
+        $this->authorization->logout();
         header('Refresh:0');
         die();
     }

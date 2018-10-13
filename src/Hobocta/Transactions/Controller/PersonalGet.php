@@ -12,8 +12,8 @@ class PersonalGet extends AbstractController
      */
     public function action()
     {
-        $userData = $this->application->authorization->getUserData();
-        $data['balance'] = $this->application->balance->getByUserId($userData['id']);
+        $userData = $this->authorization->getUserData();
+        $data['balance'] = $this->balance->getByUserId($userData['id']);
         if (empty($data['balance'])) {
             throw new CommonException('Unable to get balance');
         }

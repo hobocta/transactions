@@ -23,7 +23,7 @@ class LoginPost extends AbstractController
         }
 
         if (empty($data['errors'])) {
-            $user = $this->application->users->getByLogin($this->postData['login']);
+            $user = $this->users->getByLogin($this->postData['login']);
 
             if ($user === false || !password_verify($this->postData['password'], $user['password_hash'])) {
                 $data['errors'][] = 'Некорректная пара логин-пароль';
@@ -33,7 +33,7 @@ class LoginPost extends AbstractController
         if (!empty($data['errors'])) {
             (new Template('login', $data))->render();
         } elseif (!empty($user['id'])) {
-            $this->application->authorization->createHash($user['id']);
+            $this->authorization->createHash($user['id']);
             header("Refresh:0");
             die();
         } else {

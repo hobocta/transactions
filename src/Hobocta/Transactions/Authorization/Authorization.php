@@ -2,18 +2,28 @@
 
 namespace Hobocta\Transactions\Authorization;
 
-use Hobocta\Transactions\Application;
 use Hobocta\Transactions\CommonException;
+use Hobocta\Transactions\Database\Table\Users;
 
 class Authorization
 {
-    private $application;
     private $userData;
     private $userId;
+    private $session;
+    private $cookie;
+    private $users;
 
-    public function __construct(Application $application)
+    /**
+     * Authorization constructor.
+     * @param Session $session
+     * @param Cookie $cookie
+     * @param Users $users
+     */
+    public function __construct(Session $session, Cookie $cookie, Users $users)
     {
-        $this->application = $application;
+        $this->session = $session;
+        $this->cookie = $cookie;
+        $this->users = $users;
     }
 
     /**
@@ -22,23 +32,23 @@ class Authorization
      */
     public function isAuthorized()
     {
-        $this->userId = $this->application->session->getUserId();
+        $this->userId = $this->session->getUserId();
         if (!$this->userId) {
-            $this->userId = $this->application->cookie->getUserId();
+            $this->userId = $this->cookie->getUserId();
         }
         if (!$this->userId) {
             return false;
         }
 
-        $hash = $this->application->session->getUserAuthHash();
+        $hash = $this->session->getUserAuthHash();
         if (!$hash) {
-            $hash = $this->application->cookie->getUserAuthHash();
+            $hash = $this->cookie->getUserAuthHash();
         }
         if (!$hash) {
             return false;
         }
 
-        $this->userData = $this->application->users->getById($this->userId);
+        $this->userData = $this->users->getById($this->userId);
         if (!$this->userData) {
             return false;
         }
@@ -63,12 +73,12 @@ class Authorization
         }
 
         $hash = Hash::generate();
-        $this->application->users->updateAuthHash($userId, $hash);
-        $this->application->session->setUserAuthHash($hash);
-        $this->application->cookie->setUserAuthHash($hash);
+        $this->users->updateAuthHash($userId, $hash);
+        $this->session->setUserAuthHash($hash);
+        $this->cookie->setUserAuthHash($hash);
 
-        $this->application->session->setUserId($userId);
-        $this->application->cookie->setUserId($userId);
+        $this->session->setUserId($userId);
+        $this->cookie->setUserId($userId);
     }
 
     /**
@@ -76,10 +86,10 @@ class Authorization
      */
     public function logout()
     {
-        $this->application->session->setUserAuthHash('');
-        $this->application->cookie->setUserAuthHash('');
-        $this->application->session->setUserId(0);
-        $this->application->cookie->setUserId(0);
+        $this->session->setUserAuthHash('');
+        $this->cookie->setUserAuthHash('');
+        $this->session->setUserId(0);
+        $this->cookie->setUserId(0);
     }
 
     public function getUserData()

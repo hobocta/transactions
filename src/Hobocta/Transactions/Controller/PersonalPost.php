@@ -17,7 +17,7 @@ class PersonalPost extends AbstractController
     {
         $this->data = [];
 
-        $this->userData = $this->application->authorization->getUserData();
+        $this->userData = $this->authorization->getUserData();
 
         $this->data['balance'] = $this->getBalance($this->userData['id']);
 
@@ -48,7 +48,7 @@ class PersonalPost extends AbstractController
      */
     private function getBalance($userId)
     {
-        $balance = $this->application->balance->getByUserId($userId);
+        $balance = $this->balance->getByUserId($userId);
 
         if (empty($balance)) {
             throw new CommonException('Unable to get balance');
@@ -63,7 +63,7 @@ class PersonalPost extends AbstractController
             $this->data['errors'][] = 'Укажие сумму для вывода средств';
         }
 
-        if (!$this->application->sum->isValidToUnFormat($this->postData['sumToWithdraw'])) {
+        if (!$this->sum->isValidToUnFormat($this->postData['sumToWithdraw'])) {
             $this->data['errors'][] = 'Некорректный формат данных';
         }
 
@@ -78,7 +78,7 @@ class PersonalPost extends AbstractController
     private function fillSumToWithdraw()
     {
         if (empty($this->data['errors'])) {
-            $this->data['sumToWithdraw'] = $this->application->sum->unFormat($this->postData['sumToWithdraw']);
+            $this->data['sumToWithdraw'] = $this->sum->unFormat($this->postData['sumToWithdraw']);
 
             if ($this->data['sumToWithdraw'] <= 0) {
                 $this->data['errors'][] = 'Укажите корректную сумму для вывода средств';
@@ -110,7 +110,7 @@ class PersonalPost extends AbstractController
     private function calculateBalanceNew()
     {
         $this->data['balanceNew'] = (int)$this->data['balance']['balance'] - $this->data['sumToWithdraw'];
-        $this->data['balanceNewFormatted'] = $this->application->sum->format($this->data['balanceNew']);
+        $this->data['balanceNewFormatted'] = $this->sum->format($this->data['balanceNew']);
     }
 
     private function isConfirmed()
@@ -123,7 +123,7 @@ class PersonalPost extends AbstractController
      */
     private function checkQueryRepeat()
     {
-        if ($this->application->session->getFormToken() === $this->postData['formToken']) {
+        if ($this->session->getFormToken() === $this->postData['formToken']) {
             header('Refresh:0');
             die();
         }
@@ -134,9 +134,9 @@ class PersonalPost extends AbstractController
      */
     private function withdrawDo()
     {
-        $this->application->session->setFormToken($this->postData['formToken']);
-        $this->application->balanceManager->update($this->data['balance']['id'], $this->data['sumToWithdraw']);
-        $this->data['balance'] = $this->application->balance->getByUserId($this->userData['id']);
+        $this->session->setFormToken($this->postData['formToken']);
+        $this->balanceManager->update($this->data['balance']['id'], $this->data['sumToWithdraw']);
+        $this->data['balance'] = $this->balance->getByUserId($this->userData['id']);
         $this->data['updated'] = true;
         $this->data['messages'][] = 'Вывод средств выполнен';
     }
