@@ -10,6 +10,6 @@ Install:
 * `php migrations/003_create_balance_log_table.php`
 * `php migrations/004_add_user_and_balance_rows_to_tables.php`
 
-Run balance lock test:
+Test:
 
 `php tests/setDefaulBalanceAndWithdrawSum.php`
