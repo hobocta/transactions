@@ -20,7 +20,7 @@ class BalanceManager
     {
         $this->application->database->startTransaction();
 
-        $balance = $this->application->balance->getById($balanceRowId);
+        $balance = $this->application->balance->getById($balanceRowId, true);
 
         usleep(10000);  // @todo
 

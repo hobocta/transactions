@@ -10,10 +10,11 @@ class Balance extends AbstractTable
 
     /**
      * @param $id
+     * @param bool $forUpdate
      * @return mixed
      * @throws CommonException
      */
-    public function getById($id)
+    public function getById($id, $forUpdate = false)
     {
         $id = (int)$id;
 
@@ -23,7 +24,7 @@ class Balance extends AbstractTable
 
         /** @noinspection SqlResolve */
         $data = $this->database->query(
-            "SELECT * FROM `{$this->tableName}` WHERE `id` = {$id} LIMIT 1"
+            "SELECT * FROM `{$this->tableName}` WHERE `id` = {$id} LIMIT 1" . ($forUpdate ? ' FOR UPDATE' : '')
         )->fetch();
 
         if (empty($data)) {
