@@ -3,7 +3,6 @@
 namespace Hobocta\Transactions\Database\Table;
 
 use Hobocta\Transactions\CommonException;
-use Hobocta\Transactions\Sum;
 
 class Balance extends AbstractTable
 {
