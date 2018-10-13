@@ -22,8 +22,6 @@ class BalanceManager
 
         $balance = $this->application->balance->getById($balanceRowId, true);
 
-        usleep(10000);  // @todo
-
         $balanceNew = (float)$balance['balance'] - $withdraw;
 
         if ($balanceNew < 0) {
