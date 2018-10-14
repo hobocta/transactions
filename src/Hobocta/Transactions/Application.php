@@ -79,6 +79,8 @@ class Application
             ->setArguments($controllerArguments);
         $this->container->register('logoutPostController', Controller\LogoutPost::class)
             ->setArguments($controllerArguments);
+        $this->container->register('redirectToLoginController', Controller\LogoutPost::class)
+            ->setArguments($controllerArguments);
     }
 
     /**
@@ -89,35 +91,34 @@ class Application
     {
         /** @var Authorization\Authorization $authorization */
         $authorization = $this->container->get('authorization');
+        $isAuthorized = $authorization->isAuthorized();
 
-        if (!$authorization->isAuthorized()) {
-            if (empty($_POST['command'])) {
-                /** @var Controller\LoginGet $loginGetController */
-                $loginGetController = $this->container->get('loginGetController');
-                $loginGetController->action();
-            } elseif ($_POST['command'] === 'login') {
-                /** @var Controller\LoginPost $loginPostController */
-                $loginPostController = $this->container->get('loginPostController');
-                $loginPostController->action();
-            } else {
-                throw new CommonException('Unknown command');
-            }
+        if (!$isAuthorized && empty($_POST['command'])) {
+            /** @var Controller\LoginGet $controller */
+            $controller = $this->container->get('loginGetController');
+            $controller->action();
+        } elseif (!$isAuthorized && $_POST['command'] === 'login') {
+            /** @var Controller\LoginPost $controller */
+            $controller = $this->container->get('loginPostController');
+            $controller->action();
+        } elseif ($isAuthorized && empty($_POST['command'])) {
+            /** @var Controller\PersonalGet $controller */
+            $controller = $this->container->get('personalGetController');
+            $controller->action();
+        } elseif ($isAuthorized && $_POST['command'] === 'withdraw') {
+            /** @var Controller\PersonalPost $controller */
+            $controller = $this->container->get('personalPostController');
+            $controller->action();
+        } elseif ($isAuthorized && $_POST['command'] === 'logout') {
+            /** @var Controller\LogoutPost $controller */
+            $controller = $this->container->get('logoutPostController');
+            $controller->action();
+        } elseif (!$isAuthorized) {
+            /** @var Controller\RedirectToLogin $controller */
+            $controller = $this->container->get('redirectToLoginController');
+            $controller->action();
         } else {
-            if (empty($_POST['command'])) {
-                /** @var Controller\PersonalGet $personalGetController */
-                $personalGetController = $this->container->get('personalGetController');
-                $personalGetController->action();
-            } elseif ($_POST['command'] === 'withdraw') {
-                /** @var Controller\PersonalPost $personalPostController */
-                $personalPostController = $this->container->get('personalPostController');
-                $personalPostController->action();
-            } elseif ($_POST['command'] === 'logout') {
-                /** @var Controller\LogoutPost $logoutPostController */
-                $logoutPostController = $this->container->get('logoutPostController');
-                $logoutPostController->action();
-            } else {
-                throw new CommonException('Unknown command');
-            }
+            throw new CommonException('Unknown command');
         }
     }
 }
