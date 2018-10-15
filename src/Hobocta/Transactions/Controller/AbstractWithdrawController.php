@@ -6,8 +6,8 @@ use Hobocta\Transactions\CommonException;
 
 abstract class AbstractWithdrawController extends AbstractController
 {
-    protected $data;
-    protected $userData;
+    protected $data = [];
+    protected $userData = [];
 
     protected function fillUserData()
     {

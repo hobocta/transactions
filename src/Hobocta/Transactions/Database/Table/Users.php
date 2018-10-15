@@ -9,11 +9,11 @@ class Users extends AbstractTable
     private $tableName = 'users';
 
     /**
-     * @param $id
+     * @param int $id
      * @return mixed
      * @throws CommonException
      */
-    public function getById($id)
+    public function getById(int $id)
     {
         $id = (int)$id;
 
@@ -28,11 +28,11 @@ class Users extends AbstractTable
     }
 
     /**
-     * @param $login
+     * @param string $login
      * @return mixed
      * @throws CommonException
      */
-    public function getByLogin($login)
+    public function getByLogin(string $login)
     {
         if (empty($login)) {
             throw new CommonException('Empty login');
@@ -45,11 +45,11 @@ class Users extends AbstractTable
     }
 
     /**
-     * @param $id
-     * @param $authHash
+     * @param int $id
+     * @param string $authHash
      * @throws CommonException
      */
-    public function updateAuthHash($id, $authHash)
+    public function updateAuthHash(int $id, string $authHash)
     {
         $id = (int)$id;
 

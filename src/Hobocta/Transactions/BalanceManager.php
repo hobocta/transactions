@@ -20,11 +20,12 @@ class BalanceManager
     }
 
     /**
-     * @param $balanceRowId
-     * @param $balanceNew
+     * @param int $balanceRowId
+     * @param int $balanceOld
+     * @param int $balanceNew
      * @throws CommonException
      */
-    public function update($balanceRowId, $balanceOld, $balanceNew)
+    public function update(int $balanceRowId, int $balanceOld, int $balanceNew)
     {
         $this->balanceLog->add($balanceRowId, $balanceOld, $balanceNew);
 

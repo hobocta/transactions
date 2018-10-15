@@ -9,12 +9,12 @@ class BalanceLog extends AbstractTable
     private $tableName = 'balance_log';
 
     /**
-     * @param $userId
-     * @param $balanceOld
-     * @param $balanceNew
+     * @param int $userId
+     * @param int $balanceOld
+     * @param int $balanceNew
      * @throws CommonException
      */
-    public function add($userId, $balanceOld, $balanceNew)
+    public function add(int $userId, int $balanceOld, int $balanceNew)
     {
         $userId = (int)$userId;
         if (empty($userId)) {

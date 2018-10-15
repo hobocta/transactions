@@ -7,10 +7,10 @@ class Template
     /**
      * @var array
      */
-    private $data;
-    private $templateName;
+    private $data = [];
+    private $templateName = '';
 
-    public function __construct($templateName, array $data = array())
+    public function __construct(string $templateName, array $data = [])
     {
         $this->data = $data;
         $this->templateName = $templateName;

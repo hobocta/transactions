@@ -18,8 +18,8 @@ class AbstractController
     protected $balance;
     protected $balanceManager;
     protected $sum;
-    protected $getData;
-    protected $postData;
+    protected $getData = [];
+    protected $postData = [];
 
     public function __construct(
         Authorization $authorization,

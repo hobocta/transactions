@@ -7,7 +7,7 @@ use Hobocta\Transactions\Database\Table\Users;
 
 class Authorization
 {
-    private $userData;
+    private $userData = [];
     private $userId;
     private $session;
     private $cookie;
@@ -30,7 +30,7 @@ class Authorization
      * @return bool
      * @throws CommonException
      */
-    public function isAuthorized()
+    public function isAuthorized(): bool
     {
         $this->userId = $this->session->getUserId();
         if (!$this->userId) {
@@ -61,10 +61,10 @@ class Authorization
     }
 
     /**
-     * @param $userId
+     * @param int $userId
      * @throws CommonException
      */
-    public function createHash($userId)
+    public function createHash(int $userId)
     {
         $userId = (int)$userId;
 
@@ -92,7 +92,10 @@ class Authorization
         $this->cookie->setUserId(0);
     }
 
-    public function getUserData()
+    /**
+     * @return array
+     */
+    public function getUserData(): array
     {
         return $this->userData;
     }

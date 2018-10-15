@@ -26,11 +26,11 @@ class Database
     }
 
     /**
-     * @param $query
+     * @param string $query
      * @return \PDOStatement
      * @throws CommonException
      */
-    public function query($query)
+    public function query(string $query): \PDOStatement
     {
         $result = $this->pdo->query($query);
 

@@ -8,34 +8,34 @@ class Cookie
     const USER_AUTH_HASH = 'userAuthHash';
 
     /**
-     * @param $hash
+     * @param string $hash
      */
-    public function setUserId($hash)
+    public function setUserId(string $hash)
     {
         setcookie(static::USER_ID, $hash, time() + 15 * 60);
     }
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
-        return isset($_COOKIE[static::USER_ID]) ? (int)$_COOKIE[static::USER_ID] : null;
+        return isset($_COOKIE[static::USER_ID]) ? (int)$_COOKIE[static::USER_ID] : 0;
     }
 
     /**
-     * @param $hash
+     * @param string $hash
      */
-    public function setUserAuthHash($hash)
+    public function setUserAuthHash(string $hash)
     {
         setcookie(static::USER_AUTH_HASH, $hash, time() + 15 * 60);
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getUserAuthHash()
+    public function getUserAuthHash(): string
     {
-        return isset($_COOKIE[static::USER_AUTH_HASH]) ? (string)$_COOKIE[static::USER_AUTH_HASH] : null;
+        return isset($_COOKIE[static::USER_AUTH_HASH]) ? (string)$_COOKIE[static::USER_AUTH_HASH] : '';
     }
 }

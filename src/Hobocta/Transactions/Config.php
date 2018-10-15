@@ -4,9 +4,19 @@ namespace Hobocta\Transactions;
 
 class Config
 {
-    public static function get()
+    /**
+     * @return array
+     * @throws CommonException
+     */
+    public static function get(): array
     {
         /** @noinspection PhpIncludeInspection */
-        return require sprintf('%s/config/config.php', Environment::getRootDir());
+        $config = require sprintf('%s/config/config.php', Environment::getRootDir());
+
+        if (!is_array($config)) {
+            throw new CommonException('Unable to get config');
+        }
+
+        return $config;
     }
 }

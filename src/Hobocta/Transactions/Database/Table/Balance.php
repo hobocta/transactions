@@ -9,11 +9,11 @@ class Balance extends AbstractTable
     private $tableName = 'balance';
 
     /**
-     * @param $userId
-     * @return mixed
+     * @param int $userId
+     * @return array
      * @throws CommonException
      */
-    public function getByUserId($userId)
+    public function getByUserId(int $userId): array
     {
         /** @noinspection SqlResolve */
         $query = "SELECT * FROM `{$this->tableName}` WHERE `user_id` = {$userId} LIMIT 1";
@@ -22,11 +22,11 @@ class Balance extends AbstractTable
     }
 
     /**
-     * @param $userId
-     * @return mixed
+     * @param int $userId
+     * @return array
      * @throws CommonException
      */
-    public function getByUserIdForUpdate($userId)
+    public function getByUserIdForUpdate(int $userId): array
     {
         /** @noinspection SqlResolve */
         $query = "SELECT * FROM `{$this->tableName}` WHERE `user_id` = {$userId} LIMIT 1 FOR UPDATE";
@@ -37,10 +37,10 @@ class Balance extends AbstractTable
     /**
      * @param int $userId
      * @param string $query
-     * @return mixed
+     * @return array
      * @throws CommonException
      */
-    private function getByUserIdCommon(int $userId, string $query)
+    private function getByUserIdCommon(int $userId, string $query): array
     {
         $userId = (int)$userId;
 
@@ -54,6 +54,10 @@ class Balance extends AbstractTable
             throw new CommonException('Balance row was not found');
         }
 
+        if (!is_array($data)) {
+            throw new CommonException('Data is non array');
+        }
+
         if (isset($data['balance'])) {
             $data['balance'] = (int)$data['balance'];
             $data['balanceFormatted'] = $this->sum->format($data['balance']);
@@ -63,11 +67,11 @@ class Balance extends AbstractTable
     }
 
     /**
-     * @param $id
-     * @param $balance
+     * @param int $id
+     * @param int $balance
      * @throws CommonException
      */
-    public function updateBalance($id, $balance)
+    public function updateBalance(int $id, int $balance)
     {
         $id = (int)$id;
 
