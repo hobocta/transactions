@@ -62,6 +62,7 @@ class Application
         $controllerArguments = [
             new Reference('authorization'),
             new Reference('session'),
+            new Reference('database'),
             new Reference('users'),
             new Reference('balance'),
             new Reference('balanceManager'),
@@ -73,9 +74,11 @@ class Application
             ->setArguments($controllerArguments);
         $this->container->register('loginPostController', Controller\LoginPost::class)
             ->setArguments($controllerArguments);
-        $this->container->register('personalGetController', Controller\PersonalGet::class)
+        $this->container->register('personalGetController', Controller\WithdrawCheckGet::class)
             ->setArguments($controllerArguments);
-        $this->container->register('personalPostController', Controller\PersonalPost::class)
+        $this->container->register('withdrawCheckPostController', Controller\WithdrawCheckPost::class)
+            ->setArguments($controllerArguments);
+        $this->container->register('withdrawConfirmPostController', Controller\WithdrawConfirmPost::class)
             ->setArguments($controllerArguments);
         $this->container->register('logoutPostController', Controller\LogoutPost::class)
             ->setArguments($controllerArguments);
@@ -102,12 +105,16 @@ class Application
             $controller = $this->container->get('loginPostController');
             $controller->action();
         } elseif ($isAuthorized && empty($_POST['command'])) {
-            /** @var Controller\PersonalGet $controller */
+            /** @var Controller\WithdrawCheckGet $controller */
             $controller = $this->container->get('personalGetController');
             $controller->action();
-        } elseif ($isAuthorized && $_POST['command'] === 'withdraw') {
-            /** @var Controller\PersonalPost $controller */
-            $controller = $this->container->get('personalPostController');
+        } elseif ($isAuthorized && $_POST['command'] === 'withdrawCheck') {
+            /** @var Controller\WithdrawCheckPost $controller */
+            $controller = $this->container->get('withdrawCheckPostController');
+            $controller->action();
+        } elseif ($isAuthorized && $_POST['command'] === 'withdrawConfirm') {
+            /** @var Controller\WithdrawConfirmPost $controller */
+            $controller = $this->container->get('withdrawConfirmPostController');
             $controller->action();
         } elseif ($isAuthorized && $_POST['command'] === 'logout') {
             /** @var Controller\LogoutPost $controller */

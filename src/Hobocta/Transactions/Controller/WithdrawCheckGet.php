@@ -5,7 +5,7 @@ namespace Hobocta\Transactions\Controller;
 use Hobocta\Transactions\CommonException;
 use Hobocta\Transactions\Template;
 
-class PersonalGet extends AbstractController
+class WithdrawCheckGet extends AbstractController
 {
     /**
      * @throws \Hobocta\Transactions\CommonException
@@ -18,6 +18,6 @@ class PersonalGet extends AbstractController
             throw new CommonException('Unable to get balance');
         }
 
-        (new Template('personal', $data))->render();
+        (new Template('withdrawCheck', $data))->render();
     }
 }
