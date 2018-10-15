@@ -12,7 +12,11 @@ require __DIR__ . '/../vendor/autoload.php';
 
 try {
     $application = new Application();
-    $application->database->query('
+
+    /** @var \Hobocta\Transactions\Database\Database $database */
+    $database = $this->container->get('database');
+
+    $database->query('
         CREATE TABLE IF NOT EXISTS balance (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `user_id` int(11) NOT NULL,
@@ -22,7 +26,7 @@ try {
         ) COLLATE="utf8_general_ci" ENGINE=InnoDB;
     ');
     /** @noinspection SqlResolve */
-    $application->database->query('
+    $database->query('
         ALTER TABLE `balance`
         ADD CONSTRAINT `FK_balance_user_id`
         FOREIGN KEY (`user_id`)

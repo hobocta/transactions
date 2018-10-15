@@ -19,6 +19,7 @@ class Application
 
     /**
      * Application constructor.
+     * @throws CommonException
      */
     public function __construct()
     {

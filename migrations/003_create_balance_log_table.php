@@ -12,7 +12,11 @@ require __DIR__ . '/../vendor/autoload.php';
 
 try {
     $application = new Application();
-    $application->database->query('
+
+    /** @var \Hobocta\Transactions\Database\Database $database */
+    $database = $this->container->get('database');
+
+    $database->query('
         CREATE TABLE IF NOT EXISTS balance_log (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `user_id` int(11) NOT NULL,

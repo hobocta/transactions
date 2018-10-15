@@ -13,11 +13,14 @@ require __DIR__ . '/../vendor/autoload.php';
 try {
     $application = new Application();
 
-    $application->database->startTransaction();
+    /** @var \Hobocta\Transactions\Database\Database $database */
+    $database = $this->container->get('database');
+
+    $database->startTransaction();
 
     try {
         /** @noinspection SqlResolve */
-        $result = $application->database->pdo->prepare('
+        $result = $database->pdo->prepare('
             INSERT INTO `users` (`login`, `password_hash`)
             VALUES (:login, :password_hash);
         ')->execute([
@@ -27,13 +30,13 @@ try {
         if (!$result) {
             throw new CommonException('Execute failed');
         }
-        $userId = $application->database->pdo->lastInsertId();
+        $userId = $database->pdo->lastInsertId();
         if (!$userId) {
             throw new CommonException('Unable to get lastInsertId');
         }
 
         /** @noinspection SqlResolve */
-        $result = $application->database->pdo->prepare('
+        $result = $database->pdo->prepare('
             INSERT INTO `balance` (`user_id`, `balance`)
             VALUES (:user_id, :balance);
         ')->execute([
@@ -44,11 +47,11 @@ try {
             throw new CommonException('Execute failed');
         }
 
-        $application->database->commit();
+        $database->commit();
 
         echo 'Done' . PHP_EOL;
     } catch (CommonException $e) {
-        $application->database->rollback();
+        $database->rollback();
         throw $e;
     }
 } catch (CommonException $e) {
