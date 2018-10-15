@@ -31,7 +31,7 @@ class WithdrawConfirmPost extends AbstractWithdrawController
             $this->calculateBalanceNew();
             $this->setFormToken();
             $this->withdrawDo();
-            $this->data['balance'] = $this->balance->getByUserId($this->userData['id']);
+            $this->fillBalance();
         }
 
         if (empty($this->data['errors'])) {
