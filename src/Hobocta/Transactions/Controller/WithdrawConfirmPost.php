@@ -90,6 +90,5 @@ class WithdrawConfirmPost extends AbstractWithdrawController
         );
 
         $this->data['updated'] = true;
-        $this->data['messages'][] = 'Вывод средств выполнен';
     }
 }

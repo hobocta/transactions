@@ -4,15 +4,8 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
 }
 ?>
 <div class="block">
-    <?php
-    if (!empty($data['errors']) && is_array($data['errors'])) {
-        foreach ($data['errors'] as $error) {
-            ?>
-            <p style="color: red;"><?= $error ?></p>
-            <?php
-        }
-    }
-    ?>
+    <?php require 'parts/errors.php'; ?>
+
     <form method="post">
         <input type="hidden" name="command" value="login">
         <p>
