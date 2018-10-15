@@ -13,7 +13,7 @@ class ExceptionLogger
 
         $logger->setHandlers(
             array(
-                new RotatingFileHandler('../logs/exceptions.log'),
+                new RotatingFileHandler(sprintf('%s/logs/exceptions.log', Environment::getRootDir())),
             )
         );
 
