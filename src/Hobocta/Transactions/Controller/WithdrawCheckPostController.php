@@ -5,7 +5,7 @@ namespace Hobocta\Transactions\Controller;
 use Hobocta\Transactions\CommonException;
 use Hobocta\Transactions\Template;
 
-class WithdrawCheckPost extends AbstractWithdrawController
+class WithdrawCheckPostController extends AbstractWithdrawController
 {
     /**
      * @throws CommonException

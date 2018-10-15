@@ -71,19 +71,19 @@ class Application
             $_GET,
             $_POST,
         ];
-        $this->container->register('loginGetController', Controller\LoginGet::class)
+        $this->container->register('loginGetController', Controller\LoginGetController::class)
             ->setArguments($controllerArguments);
-        $this->container->register('loginPostController', Controller\LoginPost::class)
+        $this->container->register('loginPostController', Controller\LoginPostController::class)
             ->setArguments($controllerArguments);
-        $this->container->register('withdrawCheckGetController', Controller\WithdrawCheckGet::class)
+        $this->container->register('withdrawCheckGetController', Controller\WithdrawCheckGetController::class)
             ->setArguments($controllerArguments);
-        $this->container->register('withdrawCheckPostController', Controller\WithdrawCheckPost::class)
+        $this->container->register('withdrawCheckPostController', Controller\WithdrawCheckPostController::class)
             ->setArguments($controllerArguments);
-        $this->container->register('withdrawConfirmPostController', Controller\WithdrawConfirmPost::class)
+        $this->container->register('withdrawConfirmPostController', Controller\WithdrawConfirmPostController::class)
             ->setArguments($controllerArguments);
-        $this->container->register('logoutPostController', Controller\LogoutPost::class)
+        $this->container->register('logoutPostController', Controller\LogoutPostController::class)
             ->setArguments($controllerArguments);
-        $this->container->register('redirectToLoginController', Controller\LogoutPost::class)
+        $this->container->register('redirectToLoginController', Controller\LogoutPostController::class)
             ->setArguments($controllerArguments);
     }
 
@@ -98,31 +98,31 @@ class Application
         $isAuthorized = $authorization->isAuthorized();
 
         if (!$isAuthorized && empty($_POST['command'])) {
-            /** @var Controller\LoginGet $controller */
+            /** @var Controller\LoginGetController $controller */
             $controller = $this->container->get('loginGetController');
             $controller->action();
         } elseif (!$isAuthorized && $_POST['command'] === 'login') {
-            /** @var Controller\LoginPost $controller */
+            /** @var Controller\LoginPostController $controller */
             $controller = $this->container->get('loginPostController');
             $controller->action();
         } elseif ($isAuthorized && empty($_POST['command'])) {
-            /** @var Controller\WithdrawCheckGet $controller */
+            /** @var Controller\WithdrawCheckGetController $controller */
             $controller = $this->container->get('withdrawCheckGetController');
             $controller->action();
         } elseif ($isAuthorized && $_POST['command'] === 'withdrawCheck') {
-            /** @var Controller\WithdrawCheckPost $controller */
+            /** @var Controller\WithdrawCheckPostController $controller */
             $controller = $this->container->get('withdrawCheckPostController');
             $controller->action();
         } elseif ($isAuthorized && $_POST['command'] === 'withdrawConfirm') {
-            /** @var Controller\WithdrawConfirmPost $controller */
+            /** @var Controller\WithdrawConfirmPostController $controller */
             $controller = $this->container->get('withdrawConfirmPostController');
             $controller->action();
         } elseif ($isAuthorized && $_POST['command'] === 'logout') {
-            /** @var Controller\LogoutPost $controller */
+            /** @var Controller\LogoutPostController $controller */
             $controller = $this->container->get('logoutPostController');
             $controller->action();
         } elseif (!$isAuthorized) {
-            /** @var Controller\RedirectToLogin $controller */
+            /** @var Controller\RedirectToLoginController $controller */
             $controller = $this->container->get('redirectToLoginController');
             $controller->action();
         } else {

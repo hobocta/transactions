@@ -5,7 +5,7 @@ namespace Hobocta\Transactions\Controller;
 use Hobocta\Transactions\CommonException;
 use Hobocta\Transactions\Template;
 
-class LoginPost extends AbstractController
+class LoginPostController extends AbstractController
 {
     /**
      * @throws CommonException

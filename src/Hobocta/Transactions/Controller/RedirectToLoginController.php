@@ -2,7 +2,7 @@
 
 namespace Hobocta\Transactions\Controller;
 
-class RedirectToLogin extends AbstractController
+class RedirectToLoginController extends AbstractController
 {
     public function action()
     {

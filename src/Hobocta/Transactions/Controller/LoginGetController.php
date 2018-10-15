@@ -4,7 +4,7 @@ namespace Hobocta\Transactions\Controller;
 
 use Hobocta\Transactions\Template;
 
-class LoginGet extends AbstractController
+class LoginGetController extends AbstractController
 {
     public function action()
     {
