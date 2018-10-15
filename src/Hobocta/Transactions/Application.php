@@ -75,7 +75,7 @@ class Application
             ->setArguments($controllerArguments);
         $this->container->register('loginPostController', Controller\LoginPost::class)
             ->setArguments($controllerArguments);
-        $this->container->register('personalGetController', Controller\WithdrawCheckGet::class)
+        $this->container->register('withdrawCheckGetController', Controller\WithdrawCheckGet::class)
             ->setArguments($controllerArguments);
         $this->container->register('withdrawCheckPostController', Controller\WithdrawCheckPost::class)
             ->setArguments($controllerArguments);
@@ -107,7 +107,7 @@ class Application
             $controller->action();
         } elseif ($isAuthorized && empty($_POST['command'])) {
             /** @var Controller\WithdrawCheckGet $controller */
-            $controller = $this->container->get('personalGetController');
+            $controller = $this->container->get('withdrawCheckGetController');
             $controller->action();
         } elseif ($isAuthorized && $_POST['command'] === 'withdrawCheck') {
             /** @var Controller\WithdrawCheckPost $controller */
