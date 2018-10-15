@@ -9,58 +9,53 @@ class Balance extends AbstractTable
     private $tableName = 'balance';
 
     /**
-     * @param $id
-     * @param bool $forUpdate
+     * @param $userId
      * @return mixed
      * @throws CommonException
      */
-    public function getById($id, $forUpdate = false)
+    public function getByUserId($userId)
     {
-        $id = (int)$id;
-
-        if (empty($id)) {
-            throw new CommonException('Empty id');
-        }
-
         /** @noinspection SqlResolve */
-        $data = $this->database->query(
-            "SELECT * FROM `{$this->tableName}` WHERE `id` = {$id} LIMIT 1" . ($forUpdate ? ' FOR UPDATE' : '')
-        )->fetch();
+        $query = "SELECT * FROM `{$this->tableName}` WHERE `user_id` = {$userId} LIMIT 1";
 
-        if (empty($data)) {
-            throw new CommonException('Balance row was not found');
-        }
-
-        if (isset($data['balance'])) {
-            $data['balanceFormatted'] = $this->sum->format($data['balance']);
-        }
-
-        return $data;
+        return $this->getByUserIdCommon($userId, $query);
     }
 
     /**
-     * @param $id
-     * @return array
+     * @param $userId
+     * @return mixed
      * @throws CommonException
      */
-    public function getByUserId($id)
+    public function getByUserIdForUpdate($userId)
     {
-        $id = (int)$id;
+        /** @noinspection SqlResolve */
+        $query = "SELECT * FROM `{$this->tableName}` WHERE `user_id` = {$userId} LIMIT 1 FOR UPDATE";
 
-        if (empty($id)) {
-            throw new CommonException('Empty id');
+        return $this->getByUserIdCommon($userId, $query);
+    }
+
+    /**
+     * @param int $userId
+     * @param string $query
+     * @return mixed
+     * @throws CommonException
+     */
+    private function getByUserIdCommon(int $userId, string $query)
+    {
+        $userId = (int)$userId;
+
+        if (empty($userId)) {
+            throw new CommonException('Empty user id');
         }
 
-        /** @noinspection SqlResolve */
-        $data = $this->database->query(
-            "SELECT * FROM `{$this->tableName}` WHERE `user_id` = {$id} LIMIT 1"
-        )->fetch();
+        $data = $this->database->query($query)->fetch();
 
         if (empty($data)) {
             throw new CommonException('Balance row was not found');
         }
 
         if (isset($data['balance'])) {
+            $data['balance'] = (int)$data['balance'];
             $data['balanceFormatted'] = $this->sum->format($data['balance']);
         }
 
