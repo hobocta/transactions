@@ -14,7 +14,7 @@ try {
     $application = new Application();
 
     /** @var \Hobocta\Transactions\Database\Database $database */
-    $database = $this->container->get('database');
+    $database = $application->container->get('database');
 
     $database->startTransaction();
 
@@ -50,11 +50,11 @@ try {
         $database->commit();
 
         echo 'Done' . PHP_EOL;
-    } catch (CommonException $e) {
+    } catch (\Exception $e) {
         $database->rollback();
         throw $e;
     }
-} catch (CommonException $e) {
+} catch (\Exception $e) {
     ExceptionLogger::log($e);
     die(sprintf('Exception message: %s (%s:%s)', $e->getMessage(), $e->getFile(), $e->getLine()));
 }

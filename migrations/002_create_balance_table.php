@@ -1,7 +1,6 @@
 <?php
 
 use Hobocta\Transactions\Application;
-use Hobocta\Transactions\CommonException;
 use Hobocta\Transactions\ExceptionLogger;
 
 if (!defined('STDIN')) {
@@ -14,7 +13,7 @@ try {
     $application = new Application();
 
     /** @var \Hobocta\Transactions\Database\Database $database */
-    $database = $this->container->get('database');
+    $database = $application->container->get('database');
 
     $database->query('
         CREATE TABLE IF NOT EXISTS balance (
@@ -33,7 +32,7 @@ try {
         REFERENCES `users` (`id`) ON UPDATE RESTRICT ON DELETE CASCADE;
     ');
     echo 'Done' . PHP_EOL;
-} catch (CommonException $e) {
+} catch (\Exception $e) {
     ExceptionLogger::log($e);
     die(sprintf('Exception message: %s (%s:%s)', $e->getMessage(), $e->getFile(), $e->getLine()));
 }
