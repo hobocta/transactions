@@ -5,6 +5,7 @@ namespace Hobocta\Transactions\Controller;
 use Hobocta\Transactions\Authorization\Authorization;
 use Hobocta\Transactions\Authorization\Session;
 use Hobocta\Transactions\BalanceManager;
+use Hobocta\Transactions\Database\Database;
 use Hobocta\Transactions\Database\Table;
 use Hobocta\Transactions\Sum;
 
@@ -12,6 +13,7 @@ class AbstractController
 {
     protected $authorization;
     protected $session;
+    protected $database;
     protected $users;
     protected $balance;
     protected $balanceManager;
@@ -22,6 +24,7 @@ class AbstractController
     public function __construct(
         Authorization $authorization,
         Session $session,
+        Database $database,
         Table\Users $users,
         Table\Balance $balance,
         BalanceManager $balanceManager,
@@ -31,6 +34,7 @@ class AbstractController
     ) {
         $this->authorization = $authorization;
         $this->session = $session;
+        $this->database = $database;
         $this->users = $users;
         $this->balance = $balance;
         $this->balanceManager = $balanceManager;
