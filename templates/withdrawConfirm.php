@@ -31,41 +31,30 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
     ?>
     <form method="post">
         <input type="hidden" name="formToken" value="<?= base64_encode(openssl_random_pseudo_bytes(30)) ?>">
-        <input type="hidden" name="command" value="withdraw">
+        <input type="hidden" name="command" value="withdrawConfirm">
         <input type="hidden" name="balance" value="<?= $data['balance']['balance'] ?>">
-        <?php if (!empty($data['needConfirm'])): ?>
-            <input type="hidden" name="confirmed" value="true">
-        <?php endif; ?>
-        <p>
-            <?php if ($data['updated']): ?>
-                Сумма для нового вывода средств:
-            <?php else: ?>
+        <?php if (empty($data['updated'])): ?>
+            <p>
                 Сумма для вывода средств:
-            <?php endif; ?>
-            <input
-                name="sumToWithdraw"
-                autofocus
-                <?php if (!empty($data['needConfirm'])): ?>
+                <input
+                    name="sumToWithdraw"
+                    autofocus
                     readonly
                     title="Readonly"
-                <?php endif; ?>
-                value="<?= empty($data['updated']) ? $_POST['sumToWithdraw'] : '' ?>">
-        </p>
-        <?php if (!empty($data['needConfirm'])): ?>
+                    value="<?= empty($data['updated']) ? $_POST['sumToWithdraw'] : '' ?>">
+            </p>
+        <?php endif; ?>
+        <?php if (empty($data['errors'])): ?>
             <p>
                 После вывода средств у вас на счету останется <code><?= $data['balanceNewFormatted'] ?></code>
             </p>
         <?php endif; ?>
-        <input
-            type="submit"
-            value="<?php if (!empty($data['needConfirm'])): ?>Подтвердить вывод средств<?php else: ?>Вывести средства<?php endif; ?>">
+        <input type="submit" value="Подтвердить вывод средств">
     </form>
 
-    <?php if (!empty($data['needConfirm'])): ?>
-        <form method="post" style="margin-top: 1em">
-            <input type="submit" value="Отменить">
-        </form>
-    <?php endif; ?>
+    <form method="post" style="margin-top: 1em">
+        <input type="submit" value="Отменить">
+    </form>
 </div>
 
 <form method="post">
