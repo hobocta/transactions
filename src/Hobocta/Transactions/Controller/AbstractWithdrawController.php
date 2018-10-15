@@ -46,13 +46,9 @@ abstract class AbstractWithdrawController extends AbstractController
     {
         if (empty($this->postData['sumToWithdraw'])) {
             $this->data['errors'][] = 'Укажие сумму для вывода средств';
-        }
-
-        if (!$this->sum->isValidToUnFormat($this->postData['sumToWithdraw'])) {
+        } elseif (!$this->sum->isValidToUnFormat($this->postData['sumToWithdraw'])) {
             $this->data['errors'][] = 'Некорректный формат данных';
-        }
-
-        if (empty($this->postData['formToken'])) {
+        } elseif (empty($this->postData['formToken'])) {
             $this->data['errors'][] = 'Empty formToken';
         }
     }
