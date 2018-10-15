@@ -5,7 +5,7 @@ namespace Hobocta\Transactions\Controller;
 use Hobocta\Transactions\CommonException;
 use Hobocta\Transactions\Template;
 
-class WithdrawConfirmPost extends AbstractPersonalPost
+class WithdrawConfirmPost extends AbstractWithdrawController
 {
     /**
      * @throws CommonException
@@ -18,7 +18,7 @@ class WithdrawConfirmPost extends AbstractPersonalPost
 
         $this->data = [];
 
-        $this->fillBalanceForUpdate($this->userData['id']);
+        $this->fillBalanceForUpdate();
 
         $this->validatePostFields();
 

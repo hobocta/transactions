@@ -4,7 +4,7 @@ namespace Hobocta\Transactions\Controller;
 
 use Hobocta\Transactions\CommonException;
 
-abstract class AbstractPersonalPost extends AbstractController
+abstract class AbstractWithdrawController extends AbstractController
 {
     protected $data;
     protected $userData;
@@ -15,12 +15,11 @@ abstract class AbstractPersonalPost extends AbstractController
     }
 
     /**
-     * @param $userId
      * @throws CommonException
      */
-    protected function fillBalance($userId)
+    protected function fillBalance()
     {
-        $balance = $this->balance->getByUserId($userId);
+        $balance = $this->balance->getByUserId($this->userData['id']);
 
         if (empty($balance)) {
             throw new CommonException('Unable to get balance');
@@ -30,12 +29,11 @@ abstract class AbstractPersonalPost extends AbstractController
     }
 
     /**
-     * @param $userId
      * @throws CommonException
      */
-    protected function fillBalanceForUpdate($userId)
+    protected function fillBalanceForUpdate()
     {
-        $balance = $this->balance->getByUserIdForUpdate($userId);
+        $balance = $this->balance->getByUserIdForUpdate($this->userData['id']);
 
         if (empty($balance)) {
             throw new CommonException('Unable to get balance');

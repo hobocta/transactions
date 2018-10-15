@@ -5,19 +5,19 @@ namespace Hobocta\Transactions\Controller;
 use Hobocta\Transactions\CommonException;
 use Hobocta\Transactions\Template;
 
-class WithdrawCheckGet extends AbstractController
+class WithdrawCheckGet extends AbstractWithdrawController
 {
     /**
-     * @throws \Hobocta\Transactions\CommonException
+     * @throws CommonException
      */
     public function action()
     {
-        $userData = $this->authorization->getUserData();
-        $data['balance'] = $this->balance->getByUserId($userData['id']);
-        if (empty($data['balance'])) {
-            throw new CommonException('Unable to get balance');
-        }
+        $this->fillUserData();
 
-        (new Template('withdrawCheck', $data))->render();
+        $this->data = [];
+
+        $this->fillBalance();
+
+        (new Template('withdrawCheck', $this->data))->render();
     }
 }
