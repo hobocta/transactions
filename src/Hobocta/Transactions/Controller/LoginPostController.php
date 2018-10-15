@@ -16,9 +16,7 @@ class LoginPostController extends AbstractController
 
         if (empty($this->postData['login'])) {
             $data['errors'][] = 'Укажите логин';
-        }
-
-        if (empty($this->postData['password'])) {
+        } elseif (empty($this->postData['password'])) {
             $data['errors'][] = 'Укажите пароль';
         }
 
@@ -34,7 +32,7 @@ class LoginPostController extends AbstractController
             (new Template('login', $data))->render();
         } elseif (!empty($user['id'])) {
             $this->authorization->createHash($user['id']);
-            header("Refresh:0");
+            header('Refresh:0');
             die();
         } else {
             throw new CommonException('Unable to get user id');
