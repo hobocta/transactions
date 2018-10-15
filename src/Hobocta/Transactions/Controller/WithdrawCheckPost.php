@@ -30,7 +30,7 @@ class WithdrawCheckPost extends AbstractWithdrawController
 
         if (!empty($this->data['errors'])) {
             (new Template('withdrawCheck', $this->data))->render();
-        } elseif (!$this->data['updated']) {
+        } else {
             (new Template('withdrawConfirm', $this->data))->render();
         }
     }
