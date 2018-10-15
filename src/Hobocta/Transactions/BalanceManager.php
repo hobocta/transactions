@@ -21,25 +21,13 @@ class BalanceManager
 
     /**
      * @param $balanceRowId
-     * @param $withdraw
+     * @param $balanceNew
      * @throws CommonException
      */
-    public function update($balanceRowId, $withdraw)
+    public function update($balanceRowId, $balanceOld, $balanceNew)
     {
-        $this->database->startTransaction();
-
-        $balance = $this->balance->getById($balanceRowId, true);
-
-        $balanceNew = (float)$balance['balance'] - $withdraw;
-
-        if ($balanceNew < 0) {
-            throw new CommonException('Incorrect sum');
-        }
-
-        $this->balanceLog->add($balanceRowId, $balance['balance'], $balanceNew);
+        $this->balanceLog->add($balanceRowId, $balanceOld, $balanceNew);
 
         $this->balance->updateBalance($balanceRowId, $balanceNew);
-
-        $this->database->commit();
     }
 }
