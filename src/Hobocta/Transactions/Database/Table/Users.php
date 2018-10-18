@@ -21,7 +21,7 @@ class Users extends AbstractTable
 
         /** @noinspection SqlResolve */
         return $this->database->query(
-            "SELECT * FROM `{$this->tableName}` WHERE `id` = {$id} LIMIT 1"
+            "SELECT * FROM `{$this->tableName}` WHERE `id` = {$id}"
         )->fetch();
     }
 
@@ -38,7 +38,7 @@ class Users extends AbstractTable
 
         /** @noinspection SqlResolve */
         return $this->database->query(
-            "SELECT * FROM `{$this->tableName}` WHERE `login` = {$this->database->pdo->quote($login)} LIMIT 1"
+            "SELECT * FROM `{$this->tableName}` WHERE `login` = {$this->database->pdo->quote($login)}"
         )->fetch();
     }
 

@@ -16,7 +16,7 @@ class Balance extends AbstractTable
     public function getByUserId(int $userId): array
     {
         /** @noinspection SqlResolve */
-        $query = "SELECT * FROM `{$this->tableName}` WHERE `user_id` = {$userId} LIMIT 1";
+        $query = "SELECT * FROM `{$this->tableName}` WHERE `user_id` = {$userId}";
 
         return $this->getByUserIdCommon($userId, $query);
     }
@@ -81,7 +81,7 @@ class Balance extends AbstractTable
 
         /** @noinspection SqlResolve */
         $result = $this->database->query(
-            "UPDATE `{$this->tableName}` SET `balance` = {$balance} WHERE `id` = {$id} LIMIT 1"
+            "UPDATE `{$this->tableName}` SET `balance` = {$balance} WHERE `id` = {$id}"
         );
         if (!$result) {
             throw new CommonException('Unable to update user balance');
