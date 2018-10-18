@@ -2,6 +2,7 @@
 
 use Hobocta\Transactions\Application;
 use Hobocta\Transactions\CommonException;
+use Hobocta\Transactions\Database\Database;
 use Hobocta\Transactions\ExceptionLogger;
 
 if (!defined('STDIN')) {
@@ -13,7 +14,7 @@ require __DIR__ . '/../vendor/autoload.php';
 try {
     $application = new Application();
 
-    /** @var \Hobocta\Transactions\Database\Database $database */
+    /** @var Database $database */
     $database = $application->container->get('database');
 
     $database->startTransaction();
