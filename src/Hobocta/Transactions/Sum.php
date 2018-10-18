@@ -49,7 +49,7 @@ class Sum
         $decimalSumm = 0;
         if ($decimal) {
             for ($digit = 0; $digit < strlen($decimal); $digit++) {
-                $decimalSumm += $decimal[$digit] * pow(10, $this->decimals - 1 - $digit);
+                $decimalSumm += (int)$decimal[$digit] * pow(10, $this->decimals - 1 - $digit);
             }
         }
 
