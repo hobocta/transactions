@@ -29,7 +29,7 @@ class Balance extends AbstractTable
     public function getByUserIdForUpdate(int $userId): array
     {
         /** @noinspection SqlResolve */
-        $query = "SELECT * FROM `{$this->tableName}` WHERE `user_id` = {$userId} LIMIT 1 FOR UPDATE";
+        $query = "SELECT * FROM `{$this->tableName}` WHERE `user_id` = {$userId} FOR UPDATE";
 
         return $this->getByUserIdCommon($userId, $query);
     }

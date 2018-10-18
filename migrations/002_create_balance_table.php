@@ -19,7 +19,7 @@ try {
     $database->query('
         CREATE TABLE IF NOT EXISTS balance (
             `id` int(11) NOT NULL AUTO_INCREMENT,
-            `user_id` int(11) NOT NULL,
+            `user_id` int(11) NOT NULL UNIQUE,
             `balance` bigint NOT NULL,
             PRIMARY KEY (`id`),
             INDEX (`user_id`)
