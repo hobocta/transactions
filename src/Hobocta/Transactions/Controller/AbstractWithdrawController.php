@@ -22,7 +22,7 @@ abstract class AbstractWithdrawController extends AbstractController
         $balance = $this->balance->getByUserId($this->userData['id']);
 
         if (empty($balance)) {
-            throw new CommonException('Unable to get balance');
+            throw new CommonException('Unable to get balance', ['balance' => $balance]);
         }
 
         $this->data['balance'] = $balance;
@@ -36,7 +36,7 @@ abstract class AbstractWithdrawController extends AbstractController
         $balance = $this->balance->getByUserIdForUpdate($this->userData['id']);
 
         if (empty($balance)) {
-            throw new CommonException('Unable to get balance');
+            throw new CommonException('Unable to get balance', ['balance' => $balance]);
         }
 
         $this->data['balance'] = $balance;
@@ -77,7 +77,14 @@ abstract class AbstractWithdrawController extends AbstractController
         $this->data['balanceNew'] = $this->data['balance']['balance'] - $this->data['sumToWithdraw'];
 
         if ($this->data['balanceNew'] < 0) {
-            throw new CommonException('Incorrect sum');
+            throw new CommonException(
+                'New sum is negative',
+                [
+                    'balance' => $this->data['balance']['balance'],
+                    'sumToWithdraw' => $this->data['sumToWithdraw'],
+                    'balanceNew' => $this->data['balanceNew'],
+                ]
+            );
         }
 
         $this->data['balanceNewFormatted'] = $this->sum->format($this->data['balanceNew']);

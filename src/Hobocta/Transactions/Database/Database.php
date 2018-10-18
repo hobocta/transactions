@@ -48,7 +48,7 @@ class Database
     {
         $result = $this->query('Start transaction');
         if (!$result) {
-            throw new CommonException('Unable to start transaction');
+            throw new CommonException('Unable to start transaction', ['result' => $result]);
         }
     }
 
@@ -59,7 +59,7 @@ class Database
     {
         $result = $this->query('Commit');
         if (!$result) {
-            throw new CommonException('Unable to commit changes');
+            throw new CommonException('Unable to commit changes', ['result' => $result]);
         }
     }
 
@@ -70,7 +70,7 @@ class Database
     {
         $result = $this->query('Rollback');
         if (!$result) {
-            throw new CommonException('Unable to rollback');
+            throw new CommonException('Unable to rollback', ['result' => $result]);
         }
     }
 }

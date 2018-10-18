@@ -126,7 +126,10 @@ class Application
             $controller = $this->container->get('redirectToLoginController');
             $controller->action();
         } else {
-            throw new CommonException('Unknown command');
+            throw new CommonException(
+                'Unknown command',
+                ['isAuthorized' => $isAuthorized, 'command' => $_POST['command']]
+            );
         }
     }
 }

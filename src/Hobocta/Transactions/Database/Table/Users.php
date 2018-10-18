@@ -16,7 +16,7 @@ class Users extends AbstractTable
     public function getById(int $id)
     {
         if (empty($id)) {
-            throw new CommonException('Empty id');
+            throw new CommonException('Empty id', ['id' => $id]);
         }
 
         /** @noinspection SqlResolve */
@@ -33,7 +33,7 @@ class Users extends AbstractTable
     public function getByLogin(string $login)
     {
         if (empty($login)) {
-            throw new CommonException('Empty login');
+            throw new CommonException('Empty login', ['login' => $login]);
         }
 
         /** @noinspection SqlResolve */
@@ -50,20 +50,19 @@ class Users extends AbstractTable
     public function updateAuthHash(int $id, string $authHash)
     {
         if (empty($id)) {
-            throw new CommonException('Empty login');
+            throw new CommonException('Empty id', ['id' => $id]);
         }
 
         if (empty($authHash)) {
-            throw new CommonException('Empty authHash');
+            throw new CommonException('Empty authHash', ['id' => $id]);
         }
 
         /** @noinspection SqlResolve */
         $result = $this->database->query(
             "UPDATE `{$this->tableName}` SET `auth_hash` = {$this->database->pdo->quote($authHash)} WHERE `id` = {$id}"
         );
-
         if (!$result) {
-            throw new CommonException('Unable to update user auth hash');
+            throw new CommonException('Unable to update user auth hash', ['id' => $id, 'result' => $result]);
         }
     }
 }

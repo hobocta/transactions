@@ -43,17 +43,17 @@ class Balance extends AbstractTable
     private function getByUserIdCommon(int $userId, string $query): array
     {
         if (empty($userId)) {
-            throw new CommonException('Empty user id');
+            throw new CommonException('Empty user id', ['userId' => $userId]);
         }
 
         $data = $this->database->query($query)->fetch();
 
         if (empty($data)) {
-            throw new CommonException('Balance row was not found');
+            throw new CommonException('Balance row was not found', ['userId' => $userId]);
         }
 
         if (!is_array($data)) {
-            throw new CommonException('Data is non array');
+            throw new CommonException('Data is non array', ['userId' => $userId]);
         }
 
         if (isset($data['balance'])) {
@@ -72,11 +72,11 @@ class Balance extends AbstractTable
     public function updateBalance(int $id, int $balance)
     {
         if (empty($id)) {
-            throw new CommonException('Empty login');
+            throw new CommonException('Empty id', ['id' => $id, 'balance' => $balance]);
         }
 
         if ($balance < 0) {
-            throw new CommonException('Incorrect $balance');
+            throw new CommonException('New balance is negative', ['id' => $id, 'balance' => $balance]);
         }
 
         /** @noinspection SqlResolve */
@@ -84,7 +84,10 @@ class Balance extends AbstractTable
             "UPDATE `{$this->tableName}` SET `balance` = {$balance} WHERE `id` = {$id}"
         );
         if (!$result) {
-            throw new CommonException('Unable to update user balance');
+            throw new CommonException(
+                'Unable to update user balance',
+                ['id' => $id, 'balance' => $balance, 'result' => $result]
+            );
         }
     }
 }

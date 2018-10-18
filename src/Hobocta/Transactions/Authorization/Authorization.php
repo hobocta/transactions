@@ -67,7 +67,7 @@ class Authorization
     public function createHash(int $userId)
     {
         if (empty($userId)) {
-            throw new CommonException('Empty userId');
+            throw new CommonException('Empty userId', ['userId' => $userId]);
         }
 
         $hash = Hash::generate();

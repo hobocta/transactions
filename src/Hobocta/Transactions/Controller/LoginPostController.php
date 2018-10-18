@@ -35,7 +35,7 @@ class LoginPostController extends AbstractController
             header('Refresh:0');
             die();
         } else {
-            throw new CommonException('Unable to get user id');
+            throw new CommonException('Unable to get user id', ['login' => $this->postData['login']]);
         }
     }
 }

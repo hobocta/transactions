@@ -29,7 +29,7 @@ class Sum
     public function unFormat(string $sum): int
     {
         if (!$this->isValidToUnFormat($sum)) {
-            throw new CommonException('Некорректный формат данных');
+            throw new CommonException('Некорректный формат данных', ['sum' => $sum]);
         }
 
         $delimiter = ',';

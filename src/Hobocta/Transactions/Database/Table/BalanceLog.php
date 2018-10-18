@@ -16,17 +16,25 @@ class BalanceLog extends AbstractTable
      */
     public function add(int $userId, int $balanceOld, int $balanceNew)
     {
-        $userId = (int)$userId;
         if (empty($userId)) {
-            throw new CommonException('Empty userId');
+            throw new CommonException(
+                'Empty userId',
+                ['userId' => $userId, 'balanceOld' => $balanceOld, 'balanceNew' => $balanceNew]
+            );
         }
 
         if ($balanceOld < 0) {
-            throw new CommonException('Incorrect balanceOld');
+            throw new CommonException(
+                'Incorrect balanceOld',
+                ['userId' => $userId, 'balanceOld' => $balanceOld, 'balanceNew' => $balanceNew]
+            );
         }
 
         if ($balanceNew < 0) {
-            throw new CommonException('Incorrect balanceNew');
+            throw new CommonException(
+                'Incorrect balanceNew',
+                ['userId' => $userId, 'balanceOld' => $balanceOld, 'balanceNew' => $balanceNew]
+            );
         }
 
         /** @noinspection SqlResolve */
@@ -34,7 +42,10 @@ class BalanceLog extends AbstractTable
             "INSERT INTO `{$this->tableName}` (user_id, created_at, balance_old, balance_new) VALUES ({$userId}, NOW(), {$balanceOld}, {$balanceNew})"
         );
         if (!$result) {
-            throw new CommonException('Unable to add balance log row');
+            throw new CommonException(
+                'Unable to add balance log row',
+                ['userId' => $userId, 'balanceOld' => $balanceOld, 'balanceNew' => $balanceNew, 'result' => $result]
+            );
         }
     }
 }
