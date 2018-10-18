@@ -15,8 +15,6 @@ class Users extends AbstractTable
      */
     public function getById(int $id)
     {
-        $id = (int)$id;
-
         if (empty($id)) {
             throw new CommonException('Empty id');
         }
@@ -51,8 +49,6 @@ class Users extends AbstractTable
      */
     public function updateAuthHash(int $id, string $authHash)
     {
-        $id = (int)$id;
-
         if (empty($id)) {
             throw new CommonException('Empty login');
         }

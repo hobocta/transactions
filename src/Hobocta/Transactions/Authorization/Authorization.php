@@ -66,8 +66,6 @@ class Authorization
      */
     public function createHash(int $userId)
     {
-        $userId = (int)$userId;
-
         if (empty($userId)) {
             throw new CommonException('Empty userId');
         }

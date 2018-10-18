@@ -42,8 +42,6 @@ class Balance extends AbstractTable
      */
     private function getByUserIdCommon(int $userId, string $query): array
     {
-        $userId = (int)$userId;
-
         if (empty($userId)) {
             throw new CommonException('Empty user id');
         }
@@ -73,8 +71,6 @@ class Balance extends AbstractTable
      */
     public function updateBalance(int $id, int $balance)
     {
-        $id = (int)$id;
-
         if (empty($id)) {
             throw new CommonException('Empty login');
         }
