@@ -22,7 +22,8 @@ class ExceptionLogger
                 $e->getFile(),
                 $e->getLine(),
                 $e->getTraceAsString()
-            )
+            ),
+            isset($e->data) ? $e->data : []
         );
     }
 }
