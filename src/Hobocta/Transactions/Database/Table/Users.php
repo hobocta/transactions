@@ -63,7 +63,7 @@ class Users extends AbstractTable
 
         /** @noinspection SqlResolve */
         $result = $this->database->query(
-            "UPDATE `{$this->tableName}` SET `auth_hash` = {$this->database->pdo->quote($authHash)} WHERE `id` = {$id} LIMIT 1"
+            "UPDATE `{$this->tableName}` SET `auth_hash` = {$this->database->pdo->quote($authHash)} WHERE `id` = {$id}"
         );
 
         if (!$result) {
