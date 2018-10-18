@@ -16,14 +16,14 @@ class ExceptionLogger
         ]);
 
         $logger->error(
-            sprintf(
-                'Exception message: %s (%s:%s), trace: %s',
-                $e->getMessage(),
-                $e->getFile(),
-                $e->getLine(),
-                $e->getTraceAsString()
-            ),
-            isset($e->data) ? $e->data : []
+            $e->getMessage(),
+            [
+                'code' => $e->getCode(),
+                'trace' => $e->getTrace(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'data' => isset($e->data) ? $e->data : [],
+            ]
         );
     }
 }
