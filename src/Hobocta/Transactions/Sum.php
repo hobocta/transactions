@@ -23,10 +23,10 @@ class Sum
 
     /**
      * @param string $sum
-     * @return int
+     * @return float|int
      * @throws CommonException
      */
-    public function unFormat(string $sum): int
+    public function unFormat(string $sum)
     {
         if (!$this->isValidToUnFormat($sum)) {
             throw new CommonException('Некорректный формат данных', ['sum' => $sum]);
@@ -47,14 +47,16 @@ class Sum
         $ceilSumm = $ceil * pow(10, $this->decimals);
 
         $decimalSumm = 0;
-        for ($digit = 0; $digit < strlen($decimal); $digit++) {
-            $decimalSumm += $decimal[$digit] * pow(10, $this->decimals - 1 - $digit);
+        if ($decimal) {
+            for ($digit = 0; $digit < strlen($decimal); $digit++) {
+                $decimalSumm += $decimal[$digit] * pow(10, $this->decimals - 1 - $digit);
+            }
         }
 
         return $ceilSumm + $decimalSumm;
     }
 
-    public function isValidToUnFormat($sum): bool
+    public function isValidToUnFormat(string $sum): bool
     {
         return preg_match('/^\d*[,\.]?\d{1,' . $this->decimals . '}$/', $sum);
     }

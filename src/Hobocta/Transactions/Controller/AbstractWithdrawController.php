@@ -59,12 +59,27 @@ abstract class AbstractWithdrawController extends AbstractController
     protected function fillSumToWithdraw()
     {
         if (empty($this->data['errors'])) {
-            $this->data['sumToWithdraw'] = $this->sum->unFormat($this->postData['sumToWithdraw']);
+            $sumToWithdrawRaw = $this->postData['sumToWithdraw'];
 
-            if ($this->data['sumToWithdraw'] <= 0) {
-                $this->data['errors'][] = 'Укажите корректную сумму для вывода средств';
-            } elseif ($this->data['sumToWithdraw'] > $this->data['balance']['balance']) {
-                $this->data['errors'][] = 'Недостаточно средств';
+            $this->data['sumToWithdraw'] = $this->sum->unFormat($sumToWithdrawRaw);
+
+            if (is_float($this->data['sumToWithdraw'])) {
+                $this->data['errors'][] = 'Слишком большое значение';
+            } elseif (!is_int($this->data['sumToWithdraw'])) {
+                throw new CommonException(
+                    'Некорректное значение',
+                    ['sumToWithdrawRaw' => $sumToWithdrawRaw, 'sumToWithdraw' => $this->data['sumToWithdraw']]
+                );
+            }
+
+            if (empty($this->data['errors'])) {
+                $this->data['sumToWithdraw'] = $this->sum->unFormat($this->postData['sumToWithdraw']);
+
+                if ($this->data['sumToWithdraw'] <= 0) {
+                    $this->data['errors'][] = 'Укажите корректную сумму для вывода средств';
+                } elseif ($this->data['sumToWithdraw'] > $this->data['balance']['balance']) {
+                    $this->data['errors'][] = 'Недостаточно средств';
+                }
             }
         }
     }
