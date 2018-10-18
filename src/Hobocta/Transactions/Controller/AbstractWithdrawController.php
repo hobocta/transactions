@@ -73,8 +73,6 @@ abstract class AbstractWithdrawController extends AbstractController
             }
 
             if (empty($this->data['errors'])) {
-                $this->data['sumToWithdraw'] = $this->sum->unFormat($this->postData['sumToWithdraw']);
-
                 if ($this->data['sumToWithdraw'] <= 0) {
                     $this->data['errors'][] = 'Укажите корректную сумму для вывода средств';
                 } elseif ($this->data['sumToWithdraw'] > $this->data['balance']['balance']) {
