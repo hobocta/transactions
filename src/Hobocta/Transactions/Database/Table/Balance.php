@@ -75,8 +75,6 @@ class Balance extends AbstractTable
             throw new CommonException('Empty login');
         }
 
-        $balance = (float)$balance;
-
         if ($balance < 0) {
             throw new CommonException('Incorrect $balance');
         }

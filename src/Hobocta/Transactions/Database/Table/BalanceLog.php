@@ -21,12 +21,10 @@ class BalanceLog extends AbstractTable
             throw new CommonException('Empty userId');
         }
 
-        $balanceOld = (float)$balanceOld;
         if ($balanceOld < 0) {
             throw new CommonException('Incorrect balanceOld');
         }
 
-        $balanceNew = (float)$balanceNew;
         if ($balanceNew < 0) {
             throw new CommonException('Incorrect balanceNew');
         }
