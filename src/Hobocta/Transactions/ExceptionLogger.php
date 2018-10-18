@@ -11,11 +11,9 @@ class ExceptionLogger
     {
         $logger = new Logger('main');
 
-        $logger->setHandlers(
-            array(
-                new RotatingFileHandler(sprintf('%s/logs/exceptions.log', Environment::getRootDir())),
-            )
-        );
+        $logger->setHandlers([
+            new RotatingFileHandler(sprintf('%s/logs/exceptions.log', Environment::getRootDir()))
+        ]);
 
         $logger->error(
             sprintf(
