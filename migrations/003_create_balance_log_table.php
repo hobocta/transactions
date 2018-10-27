@@ -3,6 +3,7 @@
 use Hobocta\Transactions\Application;
 use Hobocta\Transactions\Database\Database;
 use Hobocta\Transactions\ExceptionLogger;
+use Symfony\Component\HttpFoundation\Request;
 
 if (!defined('STDIN')) {
     die('Access is denied');
@@ -11,10 +12,10 @@ if (!defined('STDIN')) {
 require __DIR__ . '/../vendor/autoload.php';
 
 try {
-    $application = new Application();
+    $application = new Application(new Request());
 
     /** @var Database $database */
-    $database = $application->container->get('database');
+    $database = $application->container->get(Database::class);
 
     $database->query('
         CREATE TABLE IF NOT EXISTS balance_log (

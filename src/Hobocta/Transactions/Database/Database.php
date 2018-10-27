@@ -3,6 +3,7 @@
 namespace Hobocta\Transactions\Database;
 
 use Hobocta\Transactions\CommonException;
+use Hobocta\Transactions\Config;
 
 class Database
 {
@@ -11,17 +12,19 @@ class Database
      */
     public $pdo;
 
-    public function __construct(array $config)
+    public function __construct(Config $config)
     {
+        $databaseConfig = $config->get('database');
+
         $this->pdo = new \PDO(
             sprintf(
                 'mysql:dbname=%s;host=%s;port=%s',
-                $config['dbname'],
-                $config['host'],
-                $config['port']
+                $databaseConfig['dbname'],
+                $databaseConfig['host'],
+                $databaseConfig['port']
             ),
-            $config['username'],
-            $config['password']
+            $databaseConfig['username'],
+            $databaseConfig['password']
         );
     }
 

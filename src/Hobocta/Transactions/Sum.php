@@ -6,9 +6,9 @@ class Sum
 {
     private $decimals;
 
-    public function __construct(int $decimals)
+    public function __construct(Config $config)
     {
-        $this->decimals = (int)$decimals;
+        $this->decimals = (int)$config->get('decimals');
     }
 
     public function format(int $sum): string

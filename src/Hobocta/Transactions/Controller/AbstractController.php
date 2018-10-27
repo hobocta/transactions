@@ -8,6 +8,7 @@ use Hobocta\Transactions\BalanceManager;
 use Hobocta\Transactions\Database\Database;
 use Hobocta\Transactions\Database\Table;
 use Hobocta\Transactions\Sum;
+use Symfony\Component\HttpFoundation\Request;
 
 class AbstractController
 {
@@ -22,15 +23,14 @@ class AbstractController
     protected $postData = [];
 
     public function __construct(
+        Request $request,
         Authorization $authorization,
         Session $session,
         Database $database,
         Table\Users $users,
         Table\Balance $balance,
         BalanceManager $balanceManager,
-        Sum $sum,
-        array $getData,
-        array $postData
+        Sum $sum
     ) {
         $this->authorization = $authorization;
         $this->session = $session;
@@ -39,7 +39,7 @@ class AbstractController
         $this->balance = $balance;
         $this->balanceManager = $balanceManager;
         $this->sum = $sum;
-        $this->getData = $getData;
-        $this->postData = $postData;
+        $this->getData = $request->query->all();
+        $this->postData = $request->request->all();
     }
 }
