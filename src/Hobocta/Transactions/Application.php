@@ -59,7 +59,7 @@ class Application
                 Controller\WithdrawCheckPostController::class,
                 Controller\WithdrawConfirmPostController::class,
                 Controller\LogoutPostController::class,
-                Controller\LogoutPostController::class,
+                Controller\RedirectToLoginController::class,
             ] as $className
         ) {
             $this->container->autowire($className)->setPublic(true)->setArgument(0, $this->request);
