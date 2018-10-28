@@ -1,4 +1,5 @@
 /.idea/
 /logs/*.log
 /vendor/
-/config/config.php
+/config/config.yaml
+RootConfiguration

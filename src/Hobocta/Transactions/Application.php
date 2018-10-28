@@ -36,7 +36,7 @@ class Application
 
         foreach (
             [
-                Config::class,
+                Config\Config::class,
                 Authorization\Authorization::class,
                 Authorization\Session::class,
                 Authorization\Cookie::class,

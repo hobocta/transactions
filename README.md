@@ -3,8 +3,8 @@
 Install:
 
 * `composer install`
-* `cp config/config.example.php config/config.php`
-* Создать базу данных и прописать доступ к ней в config/config.php
+* `cp config/config.example.yaml config/config.yaml`
+* Создать базу данных и прописать доступ к ней в config/config.yaml
 * `php migrations/001_create_users_table.php`
 * `php migrations/002_create_balance_table.php`
 * `php migrations/003_create_balance_log_table.php`

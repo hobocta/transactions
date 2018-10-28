@@ -2,13 +2,15 @@
 
 namespace Hobocta\Transactions;
 
+use Hobocta\Transactions\Config\Config;
+
 class Sum
 {
     private $decimals;
 
     public function __construct(Config $config)
     {
-        $this->decimals = (int)$config->get('decimals');
+        $this->decimals = (int)$config->get('balance')['decimals'];
     }
 
     public function format(int $sum): string

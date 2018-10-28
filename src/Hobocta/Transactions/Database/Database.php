@@ -3,7 +3,7 @@
 namespace Hobocta\Transactions\Database;
 
 use Hobocta\Transactions\CommonException;
-use Hobocta\Transactions\Config;
+use Hobocta\Transactions\Config\Config;
 
 class Database
 {
